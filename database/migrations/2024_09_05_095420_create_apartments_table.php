@@ -34,9 +34,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::table('apartments', function ($table) {
-        //     $table->dropForeign(['user_id']);
-        // });
+         // Prima rimuovi la foreign key
+         Schema::table('apartments', function (Blueprint $table) {
+            $table->dropForeign(['user_id']); // Elimina la foreign key per user_id
+        });
+
+        // Poi elimina la tabella
         Schema::dropIfExists('apartments');
 
     }
