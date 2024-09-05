@@ -26,15 +26,21 @@ class Apartment extends Model
 
 
 
-    public function user()
+    public function User()
     {
         return $this->belongsTo(User::class);
     }
 
 
-    public function sponsor()
+    public function Sponsor()
     {
-        return $this->belongsToMany(sponsor::class);
+        return $this->belongsToMany(Sponsor::class);
+    }
+
+
+    public function Extraservice()
+    {
+        return $this->belongsToMany(ExtraService::class);
     }
 
 }

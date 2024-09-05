@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExtraServices extends Model
+class ExtraService extends Model
 {
     use HasFactory;
 
@@ -19,6 +19,6 @@ class ExtraServices extends Model
 
     public function Apartment()
     {
-        return $this->belongsTo(Apartment::class);
+        return $this->belongsToMany(Apartment::class);
     }
 }
