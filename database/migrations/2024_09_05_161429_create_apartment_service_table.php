@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();// Foreign key for apartments
             $table->foreignId('apartment_id')->constrained('apartments')->onDelete('cascade');// Foreign key for services
-            $table->foreignId('extra_service_id')->constrained('extraservices')->onDelete('cascade');
+            $table->foreignId('extra_service_id')->constrained('extra_services')->onDelete('cascade');
             $table->timestamps(); // Se desideri mantenere il timestamp per la creazione e modifica
 
         });

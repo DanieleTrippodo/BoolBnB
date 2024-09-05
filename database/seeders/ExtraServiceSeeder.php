@@ -14,7 +14,7 @@ class ExtraServiceSeeder extends Seeder
     public function run(): void
     {
         //
-        DB::table('extraservices')->insert([
+        DB::table('extra_services')->insert([
             [
                 'id' => 1,
                 'name' => 'Wi-Fi',

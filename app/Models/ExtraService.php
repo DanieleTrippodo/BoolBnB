@@ -11,8 +11,8 @@ class ExtraService extends Model
 
     protected $fillable = [
         'id',
-        'apartment_id',
-        'extra_service_id'
+        'name',
+        'is_available',
     ];
 
 
