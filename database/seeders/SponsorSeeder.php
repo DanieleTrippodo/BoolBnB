@@ -18,7 +18,7 @@ class SponsorSeeder extends Seeder
             'apartment_id' => 1,
             'sponsorship_plan' => 'Premium',
             'duration' => 30,
-            'cost' => 9.99
+            'cost' => 9,99
         ]);
     }
 }

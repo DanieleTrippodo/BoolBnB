@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('apartment_id')->constrained('apartments')->onDelete('cascade');
             $table->string('sponsorship_plan', 50);
             $table->smallInteger('duration');
-            $table->decimal('cost', 3, 3);
+            $table->decimal('cost', 3,2);
             $table->timestamps();
         });
     }
