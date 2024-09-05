@@ -15,11 +15,10 @@ class ViewSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        DB::table('sponsor')->insert([
+        DB::table('views')->insert([
             'apartment_id' => 1,
             'view_date' => $faker->date('Y-m-d', 'now'),
             'ip_address' => '192.168.0.1',
-            'cost' => 9.99
         ]);
     }
 }
