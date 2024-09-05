@@ -14,7 +14,7 @@ class SponsorSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('sponsor')->insert([
+        DB::table('sponsors')->insert([
             'apartment_id' => 1,
             'sponsorship_plan' => 'Premium',
             'duration' => 30,

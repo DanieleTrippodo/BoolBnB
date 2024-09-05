@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();// Foreign key for apartments
             $table->foreignId('apartment_id')->constrained('apartments')->onDelete('cascade');// Foreign key for services
-            $table->foreignId('extra_service_id')->constrained('extra_service')->onDelete('cascade');
+            $table->foreignId('extra_service_id')->constrained('extraservices')->onDelete('cascade');
             $table->timestamps(); // Se desideri mantenere il timestamp per la creazione e modifica
 
         });
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
 
-        Schema::table('apartments_service', function (Blueprint $table) {
+        Schema::table('apartment_service', function (Blueprint $table) {
             $table->dropForeign(['apartment_id']); // Elimina la foreign key per user_id
             $table->dropForeign(['extra_service_id']);
         });
