@@ -49,7 +49,10 @@ class User extends Authenticatable
 
 
 
-
+    public function apartments()
+    {
+        return $this->hasMany(Apartment::class);
+    }
     /* Realazione con Appartments: 1 to many */
 
 
