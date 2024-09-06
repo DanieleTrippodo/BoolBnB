@@ -20,8 +20,8 @@ return new class extends Migration
             $table->smallInteger('bathroom_num'); // Number of bathrooms (integer)
             $table->smallInteger('sq_mt'); // Square meters (small integer)
             $table->string('address', 255); // Address (string)
-            $table->decimal('latitude', 8, 6); // Latitude (decimal)
-            $table->decimal('longitude', 9, 6); // Longitude (decimal)
+            $table->decimal('latitude', 11, 8); // Latitude (decimal)
+            $table->decimal('longitude', 11, 8); // Longitude (decimal)
             $table->text('images')->nullable(); // Image path (string, optional)
             $table->boolean('visibility')->default(true); // Visibility status (boolean)
             $table->timestamps(); // Timestamps for created_at and updated_at

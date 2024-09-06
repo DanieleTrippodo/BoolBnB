@@ -15,6 +15,15 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
+<<<<<<< HEAD
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+=======
                                 <input id="name" type="text" class="form-control " name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
 
 
@@ -38,6 +47,7 @@
                                 <input id="date_of_birth" type="date" class="form-control " name="date_of_birth" value="{{ old('date_of_birth') }}"  autocomplete="name" autofocus>
 
 
+>>>>>>> origin/4-luca
                             </div>
                         </div>
 
@@ -69,7 +79,11 @@
                             </div>
                         </div>
 
+<<<<<<< HEAD
+                        <div class="row mb-3">
+=======
                         <div class="row m-3">
+>>>>>>> origin/4-luca
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
