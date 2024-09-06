@@ -1,19 +1,8 @@
-
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
-        <a class="nav-link me-2" href="#">
-            Homepage
-        </a>
-        <a class="nav-link me-2" href="#">
-            Create new project
-        </a>
-        <a class="nav-link me-2" href="#">
-
-        </a>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -21,7 +10,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/') }}">Homepage</a>
+                </li>
 
+                @if (Route::has('user.apartments.index'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user.apartments.index') }}">{{ __('Appartamenti') }}</a>
+                </li>
+                @endif
+
+                @if (Route::has('user.apartments.create'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user.apartments.create') }}">{{ __('Crea un nuovo appartamento') }}</a>
+                </li>
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -47,8 +50,8 @@
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
+                               onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
@@ -62,4 +65,3 @@
         </div>
     </div>
 </nav>
-
