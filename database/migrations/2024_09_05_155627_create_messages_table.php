@@ -11,24 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->date('date_of_birth');
-            $table->rememberToken();
+            $table->foreignId('apartment_id')->constrained('apartments')->onDelete('cascade');
+            $table->string('name'); // Nome del mittente
+            $table->string('sender_email'); // Email del mittente
+            $table->text('message'); // Testo del messaggio
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('messages');
     }
 };
