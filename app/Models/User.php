@@ -19,8 +19,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'date_of_birth',
         'email',
-        'password',
+        'password'
     ];
 
     /**
@@ -41,4 +43,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+
+
+
+    public function apartments()
+    {
+        return $this->hasMany(Apartment::class);
+    }
+    /* Realazione con Appartments: 1 to many */
+
+
 }
