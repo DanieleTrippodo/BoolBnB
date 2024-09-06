@@ -7,16 +7,11 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
-<<<<<<< HEAD
-//importa il nostro custom SCSS
-import "node_modules/scss/bootstrap.scss";
-=======
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
  */
->>>>>>> origin/4-luca
 
 const app = createApp({});
 
