@@ -13,8 +13,13 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+<<<<<<< HEAD
         $this->middleware('auth');
     }
+=======
+        // $this->middleware('auth');
+        }
+>>>>>>> origin/4-luca
 
     /**
      * Show the application dashboard.
@@ -25,4 +30,8 @@ class HomeController extends Controller
     {
         return view('home');
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/4-luca
