@@ -1,7 +1,7 @@
 import './bootstrap';
 
 //importa il nostro custom SCSS
-import '~resources/scss/app.scss';
+import "node_modules/scss/bootstrap.scss";
 
 //prende il JS di Bootstrap
 import * as bootstrap from 'bootstrap';
