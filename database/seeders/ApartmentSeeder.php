@@ -28,8 +28,38 @@ class ApartmentSeeder extends Seeder
                 'visibility' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],
+            [
+                'user_id' => 1, // Secondo appartamento per user 1
+                'title' => 'Appartamento con Vista',
+                'rooms_num' => 4,
+                'beds_num' => 3,
+                'bathroom_num' => 2,
+                'sq_mt' => 120,
+                'address' => 'Corso Venezia, 15, Milano',
+                'latitude' => 45.4700,
+                'longitude' => 9.2100,
+                'images' => 'image2.jpg',
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 1, // Terzo appartamento per user 1
+                'title' => 'Monolocale in Centro',
+                'rooms_num' => 1,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 50,
+                'address' => 'Via Manzoni, 22, Milano',
+                'latitude' => 45.4675,
+                'longitude' => 9.1920,
+                'images' => 'image3.jpg',
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
-         ]);
+        ]);
 
     }
 }
