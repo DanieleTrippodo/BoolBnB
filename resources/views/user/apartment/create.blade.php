@@ -48,7 +48,7 @@
                     <label for="address" class="form-label">Indirizzo</label>
                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
                 </div>
-
+{{--
                 <div class="mb-3">
                     <label for="latitude" class="form-label">Latitudine</label>
                     <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude') }}" required>
@@ -57,11 +57,12 @@
                 <div class="mb-3">
                     <label for="longitude" class="form-label">Longitudine</label>
                     <input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude') }}" required>
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
                     <label for="images" class="form-label">Immagini (URL)</label>
                     <input type="text" class="form-control" id="images" name="images" value="{{ old('images') }}">
+                    <input type="file" class="form-control" id="images" name="images" value="{{ old('images') }}">
                 </div>
 
                 <div class="mb-3">

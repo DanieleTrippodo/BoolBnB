@@ -6,65 +6,58 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ExtraServiceSeeder extends Seeder
+
+class ApartmentServiceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        //
-        DB::table('extra_services')->insert([
+          // Esempio di relazione tra appartamenti e servizi extra
+        DB::table('apartment_service')->insert([
             [
-                'id' => 1,
-                'name' => 'Wi-Fi',
-                'is_available' => true,
+                'apartment_id' => 1,  // ID dell'appartamento
+                'extra_service_id' => 1,  // ID del servizio extra (Wi-Fi)
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 2,
-                'name' => 'Parcheggio',
-                'is_available' => true,
+                'apartment_id' => 1,  // ID dell'appartamento
+                'extra_service_id' => 2,  // ID del servizio extra (Parcheggio)
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 3,
-                'name' => 'Piscina',
-                'is_available' => false, // In questo esempio, non è disponibile
+                'apartment_id' => 2,  // Un altro appartamento
+                'extra_service_id' => 3,  // Piscina
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 4,
-                'name' => 'Aria Condizionata',
-                'is_available' => true,
+                'apartment_id' => 2,
+                'extra_service_id' => 4,  // Aria Condizionata
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 5,
-                'name' => 'Lavatrice',
-                'is_available' => true,
+                'apartment_id' => 3,
+                'extra_service_id' => 5,  // Lavatrice
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 6,
-                'name' => 'Animali Ammessi',
-                'is_available' => false, // Non disponibile
+                'apartment_id' => 3,
+                'extra_service_id' => 6,  // Animali Ammessi
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 7,
-                'name' => 'Palestra',
-                'is_available' => true,
+                'apartment_id' => 3,
+                'extra_service_id' => 7,  // Palestra
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
-
     }
 }
