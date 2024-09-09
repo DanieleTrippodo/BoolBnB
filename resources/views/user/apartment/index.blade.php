@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('content')
+@section('content'){{-- test --}}
 
 <div class="container">
     <div class="row">
