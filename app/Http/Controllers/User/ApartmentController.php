@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\ExtraService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +31,9 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('user.apartment.create');
+        // $apartment = new Apartment();
+        // $services = ExtraService::all();
+        return view('user.apartment.create'); //compact('apartment', 'services')
     }
 
     /**
