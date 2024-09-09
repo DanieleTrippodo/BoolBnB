@@ -8,7 +8,7 @@
             <div class="card" style="width: 100%;">
                 <!-- Mostra l'immagine se esiste, altrimenti un'immagine di placeholder -->
                 @if($apartment->images)
-                    <img src="{{ $apartment->images }}" class="card-img-top" alt="{{ $apartment->title }}">
+                <img src="{{ asset('storage/' . $apartment->images) }}" alt="{{ $apartment->title }} project image" class="img-fluid">
                 @else
                     <img src="https://via.placeholder.com/150" class="card-img-top" alt="No Image Available">
                 @endif
