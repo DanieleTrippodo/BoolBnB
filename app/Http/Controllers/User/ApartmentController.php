@@ -13,11 +13,11 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-
-        $apartments = Apartment::all();
+        // Recupera tutti gli appartamenti
+        // $apartments = Apartment::all();
 
         // Recupera tutti gli appartamenti dell'utente loggato
-        // $apartments = Apartment::where('user_id', auth()->id())->get();
+        $apartments = Apartment::where('user_id', auth()->id())->get();
 
 
         return view('user.apartment.index', compact('apartments'));
@@ -75,9 +75,9 @@ class ApartmentController extends Controller
     {
 
         // Verifica se l'utente è il proprietario dell'appartamento
-        // if (auth()->id() !== $apartment->user_id) {
-        //     return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
-        // }
+        if (auth()->id() !== $apartment->user_id) {
+            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
+        }
 
         return view('user.apartment.show', compact('apartment'));
     }
@@ -88,9 +88,9 @@ class ApartmentController extends Controller
     public function edit(Apartment $apartment)
     {
         // Verifica se l'utente è il proprietario dell'appartamento
-        // if (auth()->id() !== $apartment->user_id) {
-        //     return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
-        // }
+        if (auth()->id() !== $apartment->user_id) {
+            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
+        }
 
         return view('user.apartment.edit', compact('apartment'));
     }
@@ -101,9 +101,9 @@ class ApartmentController extends Controller
     public function update(Request $request, Apartment $apartment)
     {
         // Verifica se l'utente è il proprietario dell'appartamento
-        // if (auth()->id() !== $apartment->user_id) {
-        //     return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
-        // }
+        if (auth()->id() !== $apartment->user_id) {
+            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
+        }
 
         // Validazione
         $validatedData = $request->validate([
@@ -131,9 +131,9 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         // Verifica se l'utente è il proprietario dell'appartamento
-        // if (auth()->id() !== $apartment->user_id) {
-        //     return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
-        // }
+        if (auth()->id() !== $apartment->user_id) {
+            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
+        }
 
         // Elimina l'appartamento
         $apartment->delete();
