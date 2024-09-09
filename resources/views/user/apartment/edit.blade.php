@@ -11,77 +11,66 @@
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
+              </ul>
             </div>
         @endif
 
         <div class="col-md-8">
-            <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data>
+            <form action="{{ route('user.apartments.update', $apartment) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Project Name</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ $project->name }}">
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Project Description</label>
-                    <input type="text" class="form-control" id="description" name="description" value="{{ $project->description }}">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $apartment->title) }}" required>
                 </div>
 
-
-
+                <div class="mb-3">
+                    <label for="rooms_num" class="form-label">Number of Rooms</label>
+                    <input type="number" class="form-control" id="rooms_num" name="rooms_num" value="{{ old('rooms_num', $apartment->rooms_num) }}" required>
+                </div>
 
                 <div class="mb-3">
-                    <label for="type_id" class="form-label">Project Type</label>
-                    <select class="form-select" id="type_id" name="type_id">
-                        @foreach($types as $type)
-                            <option value="{{ $type->id }}">{{ $type->name }}</option>
-                        @endforeach
+                    <label for="beds_num" class="form-label">Number of Beds</label>
+                    <input type="number" class="form-control" id="beds_num" name="beds_num" value="{{ old('beds_num', $apartment->beds_num) }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="bathroom_num" class="form-label">Number of Bathrooms</label>
+                    <input type="number" class="form-control" id="bathroom_num" name="bathroom_num" value="{{ old('bathroom_num', $apartment->bathroom_num) }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sq_mt" class="form-label">Square Meters</label>
+                    <input type="number" class="form-control" id="sq_mt" name="sq_mt" value="{{ old('sq_mt', $apartment->sq_mt) }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $apartment->address) }}" required>
+                </div>
+{{--
+                <div class="mb-3">
+                    <label for="latitude" class="form-label">Latitude</label>
+                    <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude', $apartment->latitude) }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="longitude" class="form-label">Longitude</label>
+                    <input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude', $apartment->longitude) }}" required>
+                </div> --}}
+
+                <div class="mb-3">
+                    <label for="images" class="form-label">Images</label>
+                    <input type="text" class="form-control" id="images" name="images" value="{{ old('images', $apartment->images) }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="visibility" class="form-label">Visibility</label>
+                    <select class="form-select" id="visibility" name="visibility">
+                        <option value="1" {{ old('visibility', $apartment->visibility) == 1 ? 'selected' : '' }}>Visible</option>
+                        <option value="0" {{ old('visibility', $apartment->visibility) == 0 ? 'selected' : '' }}>Hidden</option>
                     </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="technology_id" class="form-label">Technology</label>
-
-
-
-                        @foreach($technologies as $technology)
-
-                        <input name="technologies[]" type="checkbox" class="btn-check" id="tech-check-{{ $technology->id}}" autocomplete="off" value="{{ $technology->id }}"
-
-
-                        >
-
-
-
-                        <label class="btn btn-outline-primary" for="tech-check-{{ $technology->id}}">
-
-                            {{ $technology->name }}
-
-                        </label>
-                        @endforeach
-
-
-                </div>
-
-
-
-
-
-
-                <div class="mb-3">
-                    <label for="url" class="form-label">Project URL</label>das
-                    <input type="text" class="form-control" id="url" name="url" value="{{ $project->url }}">
-                </div>
-
-                <div class="mb-3">
-                    <label for="programming_language" class="form-label">Programming Language</label>
-                    <input type="text" class="form-control" id="programming_language" name="programming_language" value="{{ $project->programming_language }}">
-                </div>
-
-                <div class="mb-3">
-                    <label for="updated_on" class="form-label">Updated On</label>
-                    <input type="file" class="form-control" id="updated_on" name="updated_on" value="{{ $project->updated_on }}">
                 </div>
 
                 <div class="mb-3">
