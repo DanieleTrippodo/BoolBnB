@@ -70,9 +70,10 @@ class ApartmentController extends Controller
 
 
         // Uploading Image logic
-
-        $img_path = Storage::put('uploads/apartment', $data['images']);
-        $data['images'] = $img_path;
+        if ($request->hasFile('images')) {
+                $img_path = Storage::put('uploads/apartments', $request->file('images'));
+                $validatedData['images'] = $img_path;
+        }
 
         // Salva l'appartamento con le coordinate ottenute dall'API
         Apartment::create([
