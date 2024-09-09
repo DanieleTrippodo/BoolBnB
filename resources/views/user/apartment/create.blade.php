@@ -62,6 +62,7 @@
                 <div class="mb-3">
                     <label for="images" class="form-label">Immagini (URL)</label>
                     <input type="text" class="form-control" id="images" name="images" value="{{ old('images') }}">
+                    <input type="file" class="form-control" id="images" name="images" value="{{ old('images') }}">
                 </div>
 
                 <div class="mb-3">
