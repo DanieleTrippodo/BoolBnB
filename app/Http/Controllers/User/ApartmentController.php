@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+Use App\Models\ExtraService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,6 +31,11 @@ class ApartmentController extends Controller
      */
     public function create()
     {
+
+        // $services = ExtraService::all();
+
+
+
         return view('user.apartment.create');
     }
 
@@ -76,7 +82,7 @@ class ApartmentController extends Controller
         }
 
         // Salva l'appartamento con le coordinate ottenute dall'API
-        Apartment::create([
+        $apartment = Apartment::create([
             'user_id' => auth()->id(),
             'title' => $validatedData['title'],
             'rooms_num' => $validatedData['rooms_num'],
@@ -89,6 +95,14 @@ class ApartmentController extends Controller
             'images' => $validatedData['images'],
             'visibility' => $validatedData['visibility'] ?? true,
         ]);
+
+        // Salvataggio dei servizi extra selezionati
+        if (isset($validatedData['extra_services'])) {
+            $apartment->extraServices()->sync($validatedData['extra_services']);
+        }
+
+        //  // Salvataggio dei servizi extra selezionati
+
 
 
 
