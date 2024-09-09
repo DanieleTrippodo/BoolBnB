@@ -7,8 +7,8 @@
         @foreach ($apartments as $apartment)
             <div class="col-md-4">
                 <div class="card mb-3" style="width: 80%;">
-                    @if ($apartment->image) {{-- Se è disponibile la foto dell'appartamento --}}
-                        <img src="{{ asset('storage/' . $apartment->image) }}" class="card-img-top" alt="Missing">
+                    @if ($apartment->images) {{-- Se è disponibile la foto dell'appartamento --}}
+                        <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top" alt="Missing">
                     @else
                         <img src="..." class="card-img-top" alt="Placeholder_Image"> {{-- Inserire immagine placeholder --}}
                     @endif

@@ -38,9 +38,10 @@ class Apartment extends Model
     }
 
 
-    public function Extraservice()
+    public function extraServices()
     {
-        return $this->belongsToMany(ExtraService::class);
+        return $this->belongsToMany(ExtraService::class, 'apartment_service');
     }
+
 
 }

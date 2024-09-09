@@ -60,13 +60,13 @@
                 </div> --}}
 
                 <div class="mb-3">
-                    <label for="images" class="form-label">Immagini (URL)</label>
-                    <input type="text" class="form-control" id="images" name="images" value="{{ old('images') }}">
+                    <label for="images" class="form-label">Immagine</label>
+
                     <input type="file" class="form-control" id="images" name="images" value="{{ old('images') }}">
                 </div>
 
                 <!-- Extra Services -->
-                    {{-- <div class="mb-3">
+                    <div class="mb-3">
                         <label for="extra_services" class="form-label">Servizi Extra</label>
                         <div class="form-check">
                             @foreach($services as $service)
@@ -78,7 +78,7 @@
                                 </div>
                             @endforeach
                         </div>
-                    </div> --}}
+                    </div>
 
 
                 <div class="mb-3">

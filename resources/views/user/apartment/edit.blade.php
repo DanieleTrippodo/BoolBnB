@@ -49,20 +49,26 @@
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $apartment->address) }}" required>
                 </div>
-{{--
-                <div class="mb-3">
-                    <label for="latitude" class="form-label">Latitude</label>
-                    <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude', $apartment->latitude) }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="longitude" class="form-label">Longitude</label>
-                    <input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude', $apartment->longitude) }}" required>
-                </div> --}}
 
                 <div class="mb-3">
                     <label for="images" class="form-label">Images</label>
                     <input type="text" class="form-control" id="images" name="images" value="{{ old('images', $apartment->images) }}">
+                </div>
+
+                <!-- Extra Services -->
+                <div class="mb-3">
+                    <label for="extra_services" class="form-label">Servizi Extra</label>
+                    <div class="form-check">
+                        @foreach($services as $service)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}"
+                                    {{ in_array($service->id, old('extra_services', $apartment->extraServices->pluck('id')->toArray())) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="service-{{ $service->id }}">
+                                    {{ $service->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
                 <div class="mb-3">
