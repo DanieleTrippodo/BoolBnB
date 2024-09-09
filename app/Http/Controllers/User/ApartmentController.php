@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
 {
@@ -38,6 +38,8 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+
+
         // Validazione dei dati
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -46,7 +48,7 @@ class ApartmentController extends Controller
             'bathroom_num' => 'required|integer|min:1',
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
-            'images' => 'nullable|string',
+            // 'images' => 'url|string',
             'visibility' => 'boolean',
         ]);
 
@@ -66,6 +68,12 @@ class ApartmentController extends Controller
             return back()->withErrors(['message' => 'Non è stato possibile ottenere le coordinate.']);
         }
 
+
+        // Uploading Image logic
+
+        $img_path = Storage::put('uploads/apartment', $data['images']);
+        $data['images'] = $img_path;
+
         // Salva l'appartamento con le coordinate ottenute dall'API
         Apartment::create([
             'user_id' => auth()->id(),
@@ -80,6 +88,9 @@ class ApartmentController extends Controller
             'images' => $validatedData['images'],
             'visibility' => $validatedData['visibility'] ?? true,
         ]);
+
+
+
 
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento creato con successo!');
     }
