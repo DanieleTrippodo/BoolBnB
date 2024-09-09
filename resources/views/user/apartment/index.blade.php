@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('content')
+@section('content'){{-- test --}}
 
 @foreach ($apartments as $apartment)
     <<div class="card" style="width: 18rem;">
