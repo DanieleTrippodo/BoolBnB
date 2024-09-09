@@ -49,7 +49,7 @@
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $apartment->address) }}" required>
                 </div>
-
+{{--
                 <div class="mb-3">
                     <label for="latitude" class="form-label">Latitude</label>
                     <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude', $apartment->latitude) }}" required>
@@ -58,7 +58,7 @@
                 <div class="mb-3">
                     <label for="longitude" class="form-label">Longitude</label>
                     <input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude', $apartment->longitude) }}" required>
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
                     <label for="images" class="form-label">Images</label>

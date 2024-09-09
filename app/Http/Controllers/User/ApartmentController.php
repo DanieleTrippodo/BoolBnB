@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use Illuminate\Support\Facades\Http;
+
 
 class ApartmentController extends Controller
 {
@@ -36,7 +38,7 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        // Validazione direttamente nel controller
+        // Validazione dei dati
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'rooms_num' => 'required|integer|min:1',
@@ -44,13 +46,27 @@ class ApartmentController extends Controller
             'bathroom_num' => 'required|integer|min:1',
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
             'images' => 'nullable|string',
             'visibility' => 'boolean',
         ]);
 
-        // Salva l'appartamento
+        // Chiamata API a TomTom per ottenere le coordinate
+        $address = $validatedData['address'];
+        $apiKey = config('services.tomtom.api_key');
+        $response = Http::withoutVerifying()->get("https://api.tomtom.com/search/2/geocode/{$address}.json", [
+            'key' => $apiKey,
+        ]);
+
+        if ($response->successful()) {
+            $data = $response['results'][0];
+            $latitude = $data['position']['lat'];
+            $longitude = $data['position']['lon'];
+        } else {
+            // Gestisci errori API
+            return back()->withErrors(['message' => 'Non è stato possibile ottenere le coordinate.']);
+        }
+
+        // Salva l'appartamento con le coordinate ottenute dall'API
         Apartment::create([
             'user_id' => auth()->id(),
             'title' => $validatedData['title'],
@@ -59,14 +75,15 @@ class ApartmentController extends Controller
             'bathroom_num' => $validatedData['bathroom_num'],
             'sq_mt' => $validatedData['sq_mt'],
             'address' => $validatedData['address'],
-            'latitude' => $validatedData['latitude'],
-            'longitude' => $validatedData['longitude'],
+            'latitude' => $latitude,
+            'longitude' => $longitude,
             'images' => $validatedData['images'],
             'visibility' => $validatedData['visibility'] ?? true,
         ]);
 
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento creato con successo!');
     }
+
 
     /**
      * Display the specified resource.
@@ -113,11 +130,28 @@ class ApartmentController extends Controller
             'bathroom_num' => 'required|integer|min:1',
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
             'images' => 'nullable|string',
             'visibility' => 'boolean',
         ]);
+
+        if ($validatedData['address'] !== $apartment->address) {
+            $address = $validatedData['address'];
+            $apiKey = config('services.tomtom.api_key');
+
+            // Chiamata API TomTom per ottenere le coordinate
+            $response = Http::withoutVerifying()->get("https://api.tomtom.com/search/2/geocode/{$address}.json", [
+                'key' => $apiKey,
+            ]);
+
+            if ($response->successful()) {
+                $data = $response['results'][0];
+                $validatedData['latitude'] = $data['position']['lat'];
+                $validatedData['longitude'] = $data['position']['lon'];
+            } else {
+                // Gestisci errori API
+                return back()->withErrors(['message' => 'Non è stato possibile ottenere le coordinate.']);
+            }
+        }
 
         // Aggiorna l'appartamento
         $apartment->update($validatedData);
