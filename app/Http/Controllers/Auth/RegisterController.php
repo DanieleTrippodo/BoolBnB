@@ -50,8 +50,18 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['nullable', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users',
+                'regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/',
+            ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'password.confirmed' => 'Le password non coincidono.',
+            'email.regex' => 'L\'email deve essere in minuscolo e contenere un dominio valido.',
         ]);
     }
 
@@ -65,7 +75,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'] ?? null,
-            'email' => $data['email'],
+            'email' => strtolower($data['email']),
             'password' => Hash::make($data['password']),
             'surname' => $data['surname'] ?? null,
             'date_of_birth' => $data['date_of_birth'] ?? null,
