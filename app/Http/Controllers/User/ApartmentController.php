@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\ExtraService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,12 +16,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        // Recupera tutti gli appartamenti
-        // $apartments = Apartment::all();
-
         // Recupera tutti gli appartamenti dell'utente loggato
         $apartments = Apartment::where('user_id', auth()->id())->get();
-
 
         return view('user.apartment.index', compact('apartments'));
     }
@@ -30,7 +27,10 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('user.apartment.create');
+        // Recupera tutti i servizi extra per il form di creazione
+        $services = ExtraService::all();
+
+        return view('user.apartment.create', compact('services'));
     }
 
     /**
@@ -38,8 +38,6 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-
-
         // Validazione dei dati
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -48,8 +46,8 @@ class ApartmentController extends Controller
             'bathroom_num' => 'required|integer|min:1',
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
-            // 'images' => 'url|string',
             'visibility' => 'boolean',
+            'extra_services' => 'nullable|array',
         ]);
 
         // Chiamata API a TomTom per ottenere le coordinate
@@ -68,15 +66,14 @@ class ApartmentController extends Controller
             return back()->withErrors(['message' => 'Non è stato possibile ottenere le coordinate.']);
         }
 
-
-        // Uploading Image logic
+        // Logica per caricare l'immagine
         if ($request->hasFile('images')) {
-                $img_path = Storage::put('uploads/apartments', $request->file('images'));
-                $validatedData['images'] = $img_path;
+            $img_path = Storage::put('uploads/apartments', $request->file('images'));
+            $validatedData['images'] = $img_path;
         }
 
         // Salva l'appartamento con le coordinate ottenute dall'API
-        Apartment::create([
+        $apartment = Apartment::create([
             'user_id' => auth()->id(),
             'title' => $validatedData['title'],
             'rooms_num' => $validatedData['rooms_num'],
@@ -90,19 +87,19 @@ class ApartmentController extends Controller
             'visibility' => $validatedData['visibility'] ?? true,
         ]);
 
-
-
+        // Sincronizza i servizi extra selezionati
+        if (isset($validatedData['extra_services'])) {
+            $apartment->extraServices()->sync($validatedData['extra_services']);
+        }
 
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento creato con successo!');
     }
-
 
     /**
      * Display the specified resource.
      */
     public function show(Apartment $apartment)
     {
-
         // Verifica se l'utente è il proprietario dell'appartamento
         if (auth()->id() !== $apartment->user_id) {
             return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
@@ -121,7 +118,10 @@ class ApartmentController extends Controller
             return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
         }
 
-        return view('user.apartment.edit', compact('apartment'));
+        // Recupera i servizi extra per il form di modifica
+        $services = ExtraService::all();
+
+        return view('user.apartment.edit', compact('apartment', 'services'));
     }
 
     /**
@@ -144,8 +144,10 @@ class ApartmentController extends Controller
             'address' => 'required|string|max:255',
             'images' => 'nullable|string',
             'visibility' => 'boolean',
+            'extra_services' => 'nullable|array',
         ]);
 
+        // Verifica se l'indirizzo è cambiato per aggiornare le coordinate
         if ($validatedData['address'] !== $apartment->address) {
             $address = $validatedData['address'];
             $apiKey = config('services.tomtom.api_key');
@@ -167,6 +169,11 @@ class ApartmentController extends Controller
 
         // Aggiorna l'appartamento
         $apartment->update($validatedData);
+
+        // Sincronizza i servizi extra selezionati
+        if (isset($validatedData['extra_services'])) {
+            $apartment->extraServices()->sync($validatedData['extra_services']);
+        }
 
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento aggiornato con successo!');
     }
