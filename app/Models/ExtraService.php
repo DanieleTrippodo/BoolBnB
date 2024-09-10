@@ -9,6 +9,8 @@ class ExtraService extends Model
 {
     use HasFactory;
 
+    protected $table = 'extra_services';
+
     protected $fillable = [
         'id',
         'name',

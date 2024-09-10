@@ -24,7 +24,7 @@ class ApartmentSeeder extends Seeder
                 'address' => 'Via Roma, 10, Milano',
                 'latitude' => 45.4642,
                 'longitude' => 9.1900,
-                'images' => 'image1.jpg',
+                'images' => 'uploads/apartments/04_LCM_SLIDER_HB_2000x1333-min.jpg',
                 'visibility' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -39,7 +39,7 @@ class ApartmentSeeder extends Seeder
                 'address' => 'Corso Venezia, 15, Milano',
                 'latitude' => 45.4700,
                 'longitude' => 9.2100,
-                'images' => 'image2.jpg',
+                'images' => 'uploads/apartments/AdobeStock_297606677-scaled.jpeg', // Immagine aggiornata
                 'visibility' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -54,12 +54,11 @@ class ApartmentSeeder extends Seeder
                 'address' => 'Via Manzoni, 22, Milano',
                 'latitude' => 45.4675,
                 'longitude' => 9.1920,
-                'images' => 'image3.jpg',
+                'images' => 'uploads/apartments/casa-moderna-_800x478.jpg', // Immagine aggiornata
                 'visibility' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         ]);
-
     }
 }
