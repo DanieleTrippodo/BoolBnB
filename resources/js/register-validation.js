@@ -1,7 +1,5 @@
-// Recupera il form di registrazione
 const registerForm = document.getElementById('registerForm');
 
-// Verifica che il form di registrazione esista prima di aggiungere l'event listener
 if (registerForm) {
     registerForm.addEventListener('submit', function (event) {
         const password = document.getElementById('password').value;
@@ -10,7 +8,7 @@ if (registerForm) {
         const emailInput = document.getElementById('email');
         let emailError = '';
 
-        // Controllo che le password coincidano
+        // Controllo password
         if (password !== confirmPassword) {
             event.preventDefault();
             document.getElementById('passwordMismatch').style.display = 'block';
