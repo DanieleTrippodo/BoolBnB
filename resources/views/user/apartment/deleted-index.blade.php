@@ -19,10 +19,13 @@
 
                     <div class="card-footer">
                         <div class="btn-group" role="group"> {{-- Azioni per appartamento --}}
-                            <a href="{{ route('user.apartments.show', $apartment->id) }}" class="btn btn-primary me-1">Visualizza</a>
-                            <a href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-primary me-1">Modifica</a>
+                            <form action="{{ route('user.apartments.restore', $apartment->id) }}" method="POST" style="display:inline;" class="apartment-form-delete" data-apartment-name="{{ $apartment->title }}">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-warning">Ricrea</button>
+                            </form>
 
-                            <form action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST" style="display:inline;" class="apartment-form-delete" data-apartment-name="{{ $apartment->title }}">
+                            <form action="{{ route('user.apartments.permanent.delete', $apartment->id) }}" method="POST" style="display:inline;" class="apartment-form-delete" data-apartment-name="{{ $apartment->title }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Elimina</button>

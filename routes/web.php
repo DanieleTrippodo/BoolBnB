@@ -26,5 +26,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware('auth')->name('user.')->prefix('user/')->group(
     function () {
         // Route::get('home', [AdminHomeController::class, 'index'])->name('home');
+        Route::get('/apartments/deleted', [UserApartmentController::class, 'deletedIndex'])->name('apartments.deleted');
+        Route::patch('/apartments/{apartment}/restore', [UserApartmentController::class, 'restore'])->name('apartments.restore');
+        Route::delete('/apartments/{apartment}/permanent-delete', [UserApartmentController::class, 'permanentDelete'])->name('apartments.permanent.delete');
         Route::resource('/apartments', UserApartmentController::class);
 });
