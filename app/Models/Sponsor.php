@@ -11,8 +11,7 @@ class Sponsor extends Model
 
 
     protected $fillable = [
-        'apartment_id',
-        'sponsorship_plane',
+        'name',
         'duration',
         'cost'
     ];
