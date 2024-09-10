@@ -47,7 +47,7 @@ class ApartmentController extends Controller
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
             'visibility' => 'boolean',
-            'extra_services' => 'nullable|array',
+            'extra_services' => 'required|array|min:1',
         ]);
 
         // Chiamata API a TomTom per ottenere le coordinate
@@ -144,7 +144,7 @@ class ApartmentController extends Controller
             'address' => 'required|string|max:255',
             'images' => 'nullable|string',
             'visibility' => 'boolean',
-            'extra_services' => 'nullable|array',
+            'extra_services' => 'required|array|min:1',
         ]);
 
         // Verifica se l'indirizzo è cambiato per aggiornare le coordinate
