@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('content'){{-- test2 --}}
+@section('content')
 
 <div class="container">
     <div class="row">
@@ -9,6 +9,20 @@
                 <div class="card mb-3" style="width: 80%;">
                     @if ($apartment->image) {{-- Se è disponibile la foto dell'appartamento --}}
                         <img src="{{ asset('storage/' . $apartment->image) }}" class="card-img-top" alt="Missing">
+                    @else
+                        <img src="..." class="card-img-top" alt="Placeholder_Image"> {{-- Inserire immagine placeholder --}}
+                    @endif
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $apartment->title }}</h5>
+                    </div>
+<div class="container">
+    <div class="row">
+        @foreach ($apartments as $apartment)
+            <div class="col-md-4">
+                <div class="card mb-3" style="width: 80%;">
+                    @if ($apartment->images) {{-- Se è disponibile la foto dell'appartamento --}}
+                        <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top" alt="Missing">
                     @else
                         <img src="..." class="card-img-top" alt="Placeholder_Image"> {{-- Inserire immagine placeholder --}}
                     @endif

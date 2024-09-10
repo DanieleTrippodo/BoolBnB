@@ -60,10 +60,26 @@
                 </div> --}}
 
                 <div class="mb-3">
-                    <label for="images" class="form-label">Immagini (URL)</label>
-                    <input type="text" class="form-control" id="images" name="images" value="{{ old('images') }}">
+                    <label for="images" class="form-label">Immagine</label>
+
                     <input type="file" class="form-control" id="images" name="images" value="{{ old('images') }}">
                 </div>
+
+                <!-- Extra Services -->
+                    <div class="mb-3">
+                        <label for="extra_services" class="form-label">Servizi Extra</label>
+                        <div class="form-check">
+                            @foreach($services as $service)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}">
+                                    <label class="form-check-label" for="service-{{ $service->id }}">
+                                        {{ $service->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
 
                 <div class="mb-3">
                     <label for="visibility" class="form-label">Visibilità</label>
