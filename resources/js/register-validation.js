@@ -20,15 +20,15 @@ if (registerForm) {
         // Validazione
         const lowercaseEmail = email.toLowerCase();
         emailInput.value = lowercaseEmail;
-        const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+        const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$/;
 
         // Controllo caratteri maiuscoli
         if (email !== lowercaseEmail) {
-            emailError = 'L\'email deve contenere solo caratteri minuscoli.';
+            emailError = "L\' email deve contenere solo caratteri minuscoli.";
         }
         // Controllo chiocciola
         else if (!email.includes('@')) {
-            emailError = 'L\'email deve contenere una chiocciola (@).';
+            emailError = 'L\'email deve contenere una chiocciola (@)';
         }
         // Controllo dominio valido
         else if (!emailPattern.test(lowercaseEmail)) {
