@@ -5,7 +5,7 @@
  */
 
 import './bootstrap';
-import './autocomplete';
+
 import { createApp } from 'vue';
 import './register-validation';
 
