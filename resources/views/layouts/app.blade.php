@@ -65,7 +65,7 @@
                                 <!-- Mostra l'email o nome utente -->
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->email }}
+                                    {{ Auth::user()->name ?? Auth::user()->email}}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -90,6 +90,8 @@
             @yield('content')
         </main>
     </div>
+
+    @yield('custom-scripts')
 </body>
 
 </html>
