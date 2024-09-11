@@ -1,39 +1,41 @@
 document.addEventListener('DOMContentLoaded', function () {
     const locationInput = document.getElementById('location');
+    const apartmentList = document.getElementById('apartment-list');
+    let debounceTimeout;
 
-    // Ascolta l'evento "input" sul campo location
-    locationInput.addEventListener('input', function () {
-        const location = locationInput.value;
+    // Funzione debounce per limitare le richieste API quando l'utente digita
+    function debounce(func, delay) {
+        return function(...args) {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
 
-        // Se l'utente ha inserito almeno un carattere, invia la richiesta AJAX
-        if (location.length > 0) {
-            fetch(`{{ route('guest.search') }}?location=${location}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+    // Funzione per eseguire la ricerca dinamica solo per la location
+    function performSearch() {
+        let location = locationInput.value;  // La città selezionata
+
+        // Effettua una richiesta AJAX alla tua API o rotta di Laravel per la ricerca
+        fetch(`/search?location=${encodeURIComponent(location)}`)
             .then(response => response.json())
             .then(data => {
-                // Recupera l'elemento che contiene la lista degli appartamenti
-                const apartmentList = document.getElementById('apartment-list');
+                apartmentList.innerHTML = ''; // Svuota la lista dei risultati
 
-                // Se ci sono appartamenti disponibili, aggiornali
-                if (data.apartments.length > 0) {
-                    let html = '<ul>';
-                    data.apartments.forEach(apartment => {
-                        html += `<li><a href="/guest/apartment/${apartment.id}">${apartment.title}</a></li>`;
+                if (data.length > 0) {
+                    data.forEach(result => {
+                        let li = document.createElement('li');
+                        li.innerHTML = `<a href="/appartamenti/${result.id}">${result.title}</a>`;
+                        apartmentList.appendChild(li);
                     });
-                    html += '</ul>';
-                    apartmentList.innerHTML = html;
                 } else {
-                    // Se nessun appartamento corrisponde alla ricerca, mostra un messaggio
-                    apartmentList.innerHTML = '<p>Nessun appartamento trovato.</p>';
+                    apartmentList.innerHTML = '<li>Nessun appartamento trovato</li>';
                 }
             })
-            .catch(error => console.error('Errore:', error));
-        } else {
-            // Se il campo è vuoto, ripristina lo stato iniziale
-            document.getElementById('apartment-list').innerHTML = '<p>Nessun appartamento trovato.</p>';
-        }
-    });
+            .catch(error => {
+                console.error('Errore nella ricerca:', error);
+            });
+    }
+
+    // Esegui la ricerca solo quando l'utente modifica la posizione
+    locationInput.addEventListener('input', debounce(performSearch, 300));
 });
