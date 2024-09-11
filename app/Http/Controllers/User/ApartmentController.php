@@ -193,4 +193,44 @@ class ApartmentController extends Controller
 
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento eliminato con successo!');
     }
+
+    public function deletedIndex(Apartment $apartment){
+
+        // Verifica se l'utente è il proprietario dell'appartamento
+        if (auth()->id() !== $apartment->user_id) {
+            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
+        }
+
+        $apartments = Apartment::onlyTrashed()->get();
+
+        return view('apartments.deleted-index', compact('apartments'));
+    }
+
+    public function restore(string $id, Apartment $apartment){
+
+        // Verifica se l'utente è il proprietario dell'appartamento
+        if (auth()->id() !== $apartment->user_id) {
+            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
+        }
+
+        $apartment = Apartment::onlyTrashed()->findOrFail($id);
+
+        $apartment->restore();
+
+        return redirect()->route('apartments.deleted');
+    }
+
+    public function permanentDelete(string $id, Apartment $apartment){
+
+        // Verifica se l'utente è il proprietario dell'appartamento
+        if (auth()->id() !== $apartment->user_id) {
+            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
+        }
+
+        $apartment = Apartment::onlyTrashed()->findOrFail($id);
+
+        $apartment->forceDelete();
+
+        return redirect()->route('apartments.deleted');
+    }
 }
