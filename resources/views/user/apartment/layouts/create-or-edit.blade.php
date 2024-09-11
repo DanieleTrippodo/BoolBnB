@@ -101,3 +101,8 @@
 </div>
 
 @endsection
+
+
+@section('custom-scripts')
+    @vite('resources/js/autocomplete.js')
+@endsection
