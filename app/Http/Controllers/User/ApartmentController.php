@@ -47,7 +47,7 @@ class ApartmentController extends Controller
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
             'visibility' => 'boolean',
-            'extra_services' => 'nullable|array',
+            'extra_services' => 'required|array|min:1',
         ]);
 
         // Chiamata API a TomTom per ottenere le coordinate
@@ -144,7 +144,7 @@ class ApartmentController extends Controller
             'address' => 'required|string|max:255',
             'images' => 'nullable|string',
             'visibility' => 'boolean',
-            'extra_services' => 'nullable|array',
+            'extra_services' => 'required|array|min:1',
         ]);
 
         // Verifica se l'indirizzo è cambiato per aggiornare le coordinate
@@ -192,5 +192,35 @@ class ApartmentController extends Controller
         $apartment->delete();
 
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento eliminato con successo!');
+    }
+
+    public function deletedIndex()
+    {
+        // Recupera solo gli appartamenti eliminati
+        $apartments = Apartment::onlyTrashed()->where('user_id', auth()->id())->get();
+
+        return view('user.apartment.deleted-index', compact('apartments'));
+    }
+
+    public function restore(string $id)
+    {
+        // Recupera l'appartamento eliminato
+        $apartment = Apartment::onlyTrashed()->where('user_id', auth()->id())->findOrFail($id);
+
+        // Ripristina l'appartamento
+        $apartment->restore();
+
+        return redirect()->route('user.apartments.deleted')->with('success', 'Appartamento ripristinato con successo!');
+    }
+
+    public function permanentDelete(string $id)
+    {
+        // Recupera l'appartamento eliminato
+        $apartment = Apartment::onlyTrashed()->where('user_id', auth()->id())->findOrFail($id);
+
+        // Eliminazione permanente
+        $apartment->forceDelete();
+
+        return redirect()->route('user.apartments.deleted')->with('success', 'Appartamento eliminato definitivamente!');
     }
 }
