@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.length > 0) {
                     data.forEach(result => {
                         let li = document.createElement('li');
-                        li.innerHTML = `<a href="/appartamenti/${result.id}">${result.title}</a>`;
+                        li.innerHTML = `<a href="guest/apartment/${result.id}">${result.title}</a>`;
                         apartmentList.appendChild(li);
                     });
                 } else {
