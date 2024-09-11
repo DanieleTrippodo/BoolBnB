@@ -25,12 +25,11 @@
                                 <a href="{{ route('user.apartments.edit', $apartment->id) }}"
                                     class="btn btn-primary me-1">Modifica</a>
 
-                                <form action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Elimina</button>
-                                </form>
+                            <form action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST" style="display:inline;" class="apartment-form-delete" data-apartment-name="{{ $apartment->title }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Elimina</button>
+                            </form>
 
                             </div>
                         </div>
@@ -40,27 +39,9 @@
         </div>
     </div>
 @endsection
-{{-- SweetAlert2 CDN --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
 
 
-<script>
-    function confirmDelete(apartmentId) {
-        Swal.fire({
-            title: 'Sei sicuro di voler eliminare questo appartamento?',
-            text: "Questa azione non può essere annullata!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sì, elimina!',
-            cancelButtonText: 'Annulla'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Invia il form di cancellazione
-                document.getElementById('delete-form-' + apartmentId).submit();
-            }
-        });
-    }
-</script>
+
+@section('custom-scripts')
+    @vite('resources/js/delete-confirm.js')
+@endsection
