@@ -40,3 +40,27 @@
         </div>
     </div>
 @endsection
+{{-- SweetAlert2 CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+
+<script>
+    function confirmDelete(apartmentId) {
+        Swal.fire({
+            title: 'Sei sicuro di voler eliminare questo appartamento?',
+            text: "Questa azione non può essere annullata!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sì, elimina!',
+            cancelButtonText: 'Annulla'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Invia il form di cancellazione
+                document.getElementById('delete-form-' + apartmentId).submit();
+            }
+        });
+    }
+</script>
