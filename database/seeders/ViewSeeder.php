@@ -15,10 +15,18 @@ class ViewSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        DB::table('views')->insert([
-            'apartment_id' => 1,
-            'view_date' => $faker->date('Y-m-d', 'now'),
-            'ip_address' => '192.168.0.1',
-        ]);
+        // Ottieni tutti gli appartamenti esistenti
+        $apartments = Apartment::all();
+
+        foreach ($apartments as $apartment) {
+            // Genera un numero casuale di visualizzazioni per ogni appartamento
+            for ($i = 0; $i < rand(5, 15); $i++) {
+                DB::table('views')->insert([
+                    'apartment_id' => $apartment->id,
+                    'view_date' => $faker->dateTimeBetween('-1 year', 'now'),
+                    'ip_address' => $faker->ipv4,
+                ]);
+            }
+        }
     }
 }
