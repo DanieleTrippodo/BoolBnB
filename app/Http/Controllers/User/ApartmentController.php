@@ -194,43 +194,33 @@ class ApartmentController extends Controller
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento eliminato con successo!');
     }
 
-    public function deletedIndex(Apartment $apartment){
+    public function deletedIndex()
+    {
+        // Recupera solo gli appartamenti eliminati
+        $apartments = Apartment::onlyTrashed()->where('user_id', auth()->id())->get();
 
-        // Verifica se l'utente è il proprietario dell'appartamento
-        if (auth()->id() !== $apartment->user_id) {
-            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
-        }
-
-        $apartments = Apartment::onlyTrashed()->get();
-
-        return view('apartments.deleted-index', compact('apartments'));
+        return view('user.apartment.deleted-index', compact('apartments'));
     }
 
-    public function restore(string $id, Apartment $apartment){
+    public function restore(string $id)
+    {
+        // Recupera l'appartamento eliminato
+        $apartment = Apartment::onlyTrashed()->where('user_id', auth()->id())->findOrFail($id);
 
-        // Verifica se l'utente è il proprietario dell'appartamento
-        if (auth()->id() !== $apartment->user_id) {
-            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
-        }
-
-        $apartment = Apartment::onlyTrashed()->findOrFail($id);
-
+        // Ripristina l'appartamento
         $apartment->restore();
 
-        return redirect()->route('apartments.deleted');
+        return redirect()->route('user.apartments.deleted')->with('success', 'Appartamento ripristinato con successo!');
     }
 
-    public function permanentDelete(string $id, Apartment $apartment){
+    public function permanentDelete(string $id)
+    {
+        // Recupera l'appartamento eliminato
+        $apartment = Apartment::onlyTrashed()->where('user_id', auth()->id())->findOrFail($id);
 
-        // Verifica se l'utente è il proprietario dell'appartamento
-        if (auth()->id() !== $apartment->user_id) {
-            return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
-        }
-
-        $apartment = Apartment::onlyTrashed()->findOrFail($id);
-
+        // Eliminazione permanente
         $apartment->forceDelete();
 
-        return redirect()->route('apartments.deleted');
+        return redirect()->route('user.apartments.deleted')->with('success', 'Appartamento eliminato definitivamente!');
     }
 }
