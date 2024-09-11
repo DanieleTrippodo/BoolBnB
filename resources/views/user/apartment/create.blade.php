@@ -49,12 +49,13 @@
                             required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Indirizzo</label>
-                        <input type="text" class="form-control" id="address" name="address"
-                            value="{{ old('address') }}" required>
-                    </div>
-                    {{--
+                <div class="mb-3">
+                    <label for="address" class="form-label">Indirizzo</label>
+                    <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
+                    <ul id="suggestions-list" style="list-style: none; padding: 0;"></ul>
+                </div>
+
+{{--
                 <div class="mb-3">
                     <label for="latitude" class="form-label">Latitudine</label>
                     <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude') }}" required>
