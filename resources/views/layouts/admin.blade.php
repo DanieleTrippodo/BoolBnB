@@ -25,6 +25,6 @@
         </main>
     </div>
 
-    @yield('additional-scripts')
+    @yield('custom-scripts')
 </body>
 </html>

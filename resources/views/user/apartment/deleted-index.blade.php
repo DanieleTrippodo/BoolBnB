@@ -40,3 +40,9 @@
 </div>
 
 @endsection
+
+
+
+@section('custom-scripts')
+    @vite('resources/js/delete-confirm.js')
+@endsection
