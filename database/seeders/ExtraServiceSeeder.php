@@ -68,5 +68,3 @@ class ExtraServiceSeeder extends Seeder
 
     }
 }
-
-

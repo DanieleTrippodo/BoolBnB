@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ApartmentController as UserApartmentController;
 use Illuminate\Support\Facades\Auth;
 
+
+/* per gestire le rotte del guest */
+use App\Http\Controllers\GuestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +18,18 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+// Rotte per i guest
+Route::prefix('guest')->group(function () {
+    Route::get('/', [GuestController::class, 'index'])->name('guest.index');  // Mostra lista appartamenti
+    Route::get('/apartment/{id}', [GuestController::class, 'show'])->name('guest.show');  // Mostra dettagli appartamento
+});
+/* Rotte per la ricerca degli appartamenti */
+Route::get('/guest/search', [GuestController::class, 'search'])->name('guest.search');
+
+
+
 
 Route::get('/', function () {
     return view('/pages/welcome');
