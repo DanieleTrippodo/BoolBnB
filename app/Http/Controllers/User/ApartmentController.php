@@ -193,4 +193,34 @@ class ApartmentController extends Controller
 
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento eliminato con successo!');
     }
+
+    public function deletedIndex()
+    {
+        // Recupera solo gli appartamenti eliminati
+        $apartments = Apartment::onlyTrashed()->where('user_id', auth()->id())->get();
+
+        return view('user.apartment.deleted-index', compact('apartments'));
+    }
+
+    public function restore(string $id)
+    {
+        // Recupera l'appartamento eliminato
+        $apartment = Apartment::onlyTrashed()->where('user_id', auth()->id())->findOrFail($id);
+
+        // Ripristina l'appartamento
+        $apartment->restore();
+
+        return redirect()->route('user.apartments.deleted')->with('success', 'Appartamento ripristinato con successo!');
+    }
+
+    public function permanentDelete(string $id)
+    {
+        // Recupera l'appartamento eliminato
+        $apartment = Apartment::onlyTrashed()->where('user_id', auth()->id())->findOrFail($id);
+
+        // Eliminazione permanente
+        $apartment->forceDelete();
+
+        return redirect()->route('user.apartments.deleted')->with('success', 'Appartamento eliminato definitivamente!');
+    }
 }
