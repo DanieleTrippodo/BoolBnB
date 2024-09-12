@@ -17,17 +17,22 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
     <!-- Script -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
     <div id="app">
+        <!-- Include l'header -->
         @include('partials.header')
-
         <main class="py-4">
             @yield('content')
         </main>
+        <!-- Include il footer -->
+        @include('partials.footer')
     </div>
 
     @yield('custom-scripts')
