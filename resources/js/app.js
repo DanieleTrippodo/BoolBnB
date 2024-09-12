@@ -10,6 +10,8 @@ import './autocomplete'
 import './dinamic-search'
 
 import { createApp } from 'vue';
+import './register-validation';
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
