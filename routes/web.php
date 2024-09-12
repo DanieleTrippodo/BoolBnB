@@ -26,7 +26,7 @@ Route::prefix('guest')->group(function () {
     Route::get('/apartment/{id}', [GuestController::class, 'show'])->name('guest.show');  // Mostra dettagli appartamento
 });
 /* Rotte per la ricerca degli appartamenti */
-Route::get('/guest/search', [GuestController::class, 'search'])->name('guest.search');
+Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
 
 
