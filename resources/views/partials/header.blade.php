@@ -12,6 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Lato sinistro della navbar -->
             <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/') }}">Home</a>
+                </li>
                 @auth
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.apartments.index') }}">I tuoi appartamenti</a>
@@ -20,9 +24,7 @@
                         <a class="nav-link" href="{{ route('user.apartments.create') }}">Crea un nuovo appartamento</a>
                     </li>
                 @endauth
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Home</a>
-                </li>
+
             </ul>
 
             <!-- Lato destro della navbar -->

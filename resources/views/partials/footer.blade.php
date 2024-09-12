@@ -1,4 +1,4 @@
-
+{{--
 
 <footer class="bg-dark text-light py-4">
     <div class="container">
@@ -52,4 +52,4 @@
             <p>&copy; 2024 BoolBnB - Tutti i diritti riservati.</p>
         </div>
     </div>
-</footer>
+</footer> --}}
