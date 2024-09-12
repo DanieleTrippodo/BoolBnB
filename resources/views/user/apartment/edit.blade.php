@@ -1,4 +1,4 @@
-@extends('user.apartment.layouts.create-or-edit');
+@extends('user.apartment.layouts.create-or-edit')
 
 @section('page-title')
     Modifica {{ $apartment->title }}
