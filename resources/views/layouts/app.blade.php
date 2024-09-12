@@ -1,98 +1,110 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoolBnB</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Token CSRF -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        /* Nuova palette di colori */
+        :root {
+            --color-background: #fefbfa;
+            --color-primary: #003f6c;
+            --color-secondary: #a34a62;
+            --color-text-light: #ffffff;
+        }
 
-    <title>{{ config('app.name', 'BoolBnB') }}</title>
+        body {
+            background-color: var(--color-background);
+            color: var(--color-primary);
+        }
 
-    <link rel="icon" href="{{ asset('logo.ico') }}" type="image/x-icon">
+        /* Header */
+        .header {
+            background-color: var(--color-primary);
+            padding: 20px;
+            color: var(--color-text-light);
+        }
 
-    <!-- Font -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        .header .logo img {
+            height: 50px;
+        }
 
-    <!-- Script -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+        .header a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: var(--color-primary);
+            transition: background-color 0.3s ease;
+        }
+
+        .header a:hover {
+            background-color: var(--color-secondary);
+        }
+
+        /* Footer */
+        /* .footer {
+            background-color: var(--color-primary);
+            padding: 20px;
+            text-align: center;
+            color: var(--color-text-light);
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--color-text-light);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--color-secondary);
+        } */
+    </style>
 </head>
-
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <!-- Nome del sito che punta alla home (guest.index) -->
-                <a class="navbar-brand" href="{{ route('guest.index') }}">
-                    {{ config('app.name', 'BoolBnB') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Lato sinistro della navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <!-- Mostra il link "I tuoi appartamenti" solo se l'utente è autenticato -->
-                        @auth
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.apartments.index') }}">I tuoi appartamenti</a>
-                            </li>
-                        @endauth
-                    </ul>
+    <!-- Header -->
+    <div class="header d-flex justify-content-between align-items-center">
+        <div class="logo">
+            <a href="/">
+                <img src="{{ asset('img/Logo_BoolBnB_.png') }}" alt="BoolBnB Logo">
+            </a>
+        </div>
+        <div>
+            @auth
+                <a href="{{ route('user.apartments.index') }}" class="btn">I tuoi Appartamenti</a>
+                <a href="{{ route('user.apartments.create') }}" class="btn">Crea Appartamento</a>
+                <form action="{{ route('logout') }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            @endauth
 
-                    <!-- Lato destro della navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Link di autenticazione -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Accedi') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrati') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <!-- Mostra l'email o nome utente -->
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name ?? Auth::user()->email}}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                        {{ __('Esci') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+            @guest
+                <a href="{{ route('login') }}" class="btn">Login</a>
+                <a href="{{ route('register') }}" class="btn">Register</a>
+            @endguest
+        </div>
     </div>
 
-    @yield('custom-scripts')
-</body>
+    <!-- Main Content -->
+    <main class="container my-5">
+        @yield('content')
+    </main>
 
+    <!-- Footer -->
+    <div class="footer">
+        {{-- PlaceHolder --}}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
