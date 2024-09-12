@@ -26,18 +26,23 @@ Route::prefix('guest')->group(function () {
     Route::get('/apartment/{id}', [GuestController::class, 'show'])->name('guest.show');  // Mostra dettagli appartamento
 });
 /* Rotte per la ricerca degli appartamenti */
-Route::get('/guest/search', [GuestController::class, 'search'])->name('guest.search');
+Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
 
 
+
+// Route::get('/', function () {
+//     return view('/pages/welcome');
+// });
 
 Route::get('/', function () {
-    return view('/pages/welcome');
+    return redirect()->route('home');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [GuestController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->name('user.')->prefix('user/')->group(
     function () {
