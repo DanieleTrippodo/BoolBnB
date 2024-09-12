@@ -25,13 +25,13 @@
         </div>
 
         <div id="apartment-list" class="row">
-            <div class="col-9 d-flex">
+            <div class="col-9 d-flex flex-column">
                 <div id="sponsorized" class="d-flex flex-wrap justify-content-around align-items-center">
                     @if($apartments->isEmpty())
                         <p>Nessun appartamento trovato.</p>
                     @else
                         @foreach ($apartments as $apartment)
-                            <div class="card mb-3" style="width: 80%;">
+                            <div class="card mb-3">
                                 @if ($apartment->images)
                                     {{-- Se è disponibile la foto dell'appartamento --}}
                                     <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top"
@@ -68,7 +68,7 @@
                         <p>Nessun appartamento trovato.</p>
                     @else
                         @foreach ($apartments as $apartment)
-                            <div class="card mb-3" style="width: 80%;">
+                            <div class="card mb-3">
                                 @if ($apartment->images)
                                     {{-- Se è disponibile la foto dell'appartamento --}}
                                     <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top"
