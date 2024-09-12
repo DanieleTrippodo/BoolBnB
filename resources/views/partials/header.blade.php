@@ -12,14 +12,14 @@
             <!-- Lato sinistro della Navbar -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Homepage</a>
+                    <a class="nav-link" href="{{ url('/') }}">Home</a>
                 </li>
 
-                @if (Route::has('user.apartments.index'))
+                {{-- @if (Route::has('user.apartments.index'))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.apartments.index') }}">{{ __('Appartamenti') }}</a>
                     </li>
-                @endif
+                @endif --}}
 
                 @if (Route::has('user.apartments.create'))
                     <li class="nav-item">

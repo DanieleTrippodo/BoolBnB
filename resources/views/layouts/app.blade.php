@@ -15,6 +15,7 @@
     <!-- Font -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Script -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -24,8 +25,9 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <!-- Nome del sito che punta alla home (guest.index) -->
+                <a class="navbar-brand" href="{{ route('guest.index') }}">
+                    {{ config('app.name', 'BoolBnB') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -36,7 +38,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Lato sinistro della navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <!-- Mostra il link "I tuoi appartamenti" solo se l'utente è autenticato -->
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.apartments.index') }}">I tuoi appartamenti</a>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Lato destro della navbar -->
@@ -56,9 +63,10 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
+                                <!-- Mostra l'email o nome utente -->
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->email }}
+                                    {{ Auth::user()->name ?? Auth::user()->email}}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -83,6 +91,8 @@
             @yield('content')
         </main>
     </div>
+
+    @yield('custom-scripts')
 </body>
 
 </html>
