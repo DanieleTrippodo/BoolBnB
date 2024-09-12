@@ -19,6 +19,12 @@ use App\Http\Controllers\GuestController;
 |
 */
 
+/* Per ritornare alla Home */
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+
 
 // Rotte per i guest
 Route::prefix('guest')->group(function () {
@@ -35,9 +41,9 @@ Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 //     return view('/pages/welcome');
 // });
 
-Route::get('/', function () {
-    return redirect()->route('home');
-});
+// Route::get('/', function () {
+//     return redirect()->route('home');
+// });
 
 Auth::routes();
 
