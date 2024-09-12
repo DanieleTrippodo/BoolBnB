@@ -16,6 +16,25 @@
             <img src="{{ asset('img/Logo_BoolBnB_.png') }}" href="/home" alt="BoolBnB_Logo" style="height: 5rem;">
         </div>
 
+        <div id="apartment-list" class="row">
+            <div class="col-9 d-flex flex-column">
+                <div id="sponsorized" class="d-flex flex-wrap justify-content-around align-items-center">
+                    @if($apartments->isEmpty())
+                        <p>Nessun appartamento trovato.</p>
+                    @else
+                        @foreach ($apartments as $apartment)
+                            <div class="card mb-3">
+                                @if ($apartment->images)
+                                    {{-- Se è disponibile la foto dell'appartamento --}}
+                                    <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top"
+                                        alt="Immagine mancante">
+                                @else
+                                    <img src="..." class="card-img-top" alt="Immagine segnaposto"> {{-- Inserire immagine placeholder --}}
+                                @endif
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $apartment->title }}</h5>
+                                </div>
         <div class="nav">
             @auth
                 <a href="/apartments">I tuoi Appartamenti</a>
@@ -27,28 +46,42 @@
         </div>
     </div>
 
-    <div class="container">
-        <!-- A-side (barra laterale per la ricerca e i filtri) -->
-        <div class="aside">
-            <h4>Ricerca</h4>
-            <form action="">
-                <label for="city">Città:</label>
-                <input type="text" id="city" name="city" placeholder="Inserisci città...">
+                                <div class="card-footer">
+                                    <div class="btn-group" role="group"> {{-- Azioni per appartamento --}}
+                                        <a href="{{ route('user.apartments.show', $apartment->id) }}"
+                                            class="btn btn-primary me-1">Visualizza</a>
+                                        <a href="{{ route('user.apartments.edit', $apartment->id) }}"
+                                            class="btn btn-primary me-1">Modifica</a>
 
-                <label for="max_price">Prezzo Massimo:</label>
-                <input type="number" id="max_price" name="max_price" placeholder="Prezzo massimo...">
+                                        <form action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST" style="display:inline;" class="apartment-form-delete" data-apartment-name="{{ $apartment->title }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Elimina</button>
+                                        </form>
 
-                <label for="services">Servizi Disponibili:</label>
-                <select id="services" name="services">
-                    <option value="wifi">Wi-Fi</option>
-                    <option value="parking">Parcheggio</option>
-                    <option value="pool">Piscina</option>
-                    <option value="air_conditioning">Aria condizionata</option>
-                </select>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <div id="unsponsorized" class="d-flex flex-wrap justify-content-around align-items-center">
+                    @if($apartments->isEmpty())
+                        <p>Nessun appartamento trovato.</p>
+                    @else
+                        @foreach ($apartments as $apartment)
+                            <div class="card mb-3">
+                                @if ($apartment->images)
+                                    {{-- Se è disponibile la foto dell'appartamento --}}
+                                    <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top"
+                                        alt="Immagine mancante">
+                                @else
+                                    <img src="..." class="card-img-top" alt="Immagine segnaposto"> {{-- Inserire immagine placeholder --}}
+                                @endif
 
-                <button type="submit" style="background-color: var(--color-blue); padding: 10px; color: var(--color-light); border: none; border-radius: 5px;">Cerca</button>
-            </form>
-        </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $apartment->title }}</h5>
+                                </div>
 
 
         <!-- Body principale per ora è solo un placeholder! -->
