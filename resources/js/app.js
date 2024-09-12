@@ -5,6 +5,9 @@
  */
 
 import './bootstrap';
+import './register-validation';
+import './autocomplete'
+import './dinamic-search'
 
 import './autocomplete';
 
