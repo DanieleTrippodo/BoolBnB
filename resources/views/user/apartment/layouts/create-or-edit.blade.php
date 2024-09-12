@@ -48,7 +48,7 @@
                 <div class="mb-3">
                     <label for="address" class="form-label">Indirizzo</label>
                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $apartment->address) }}" required>
-                    <ul id="suggestions-list" style="list-style: none; padding: 0;"></ul>
+                    <ul id="suggestions-list" style="list-style: none; padding: .75rem;"></ul>
                 </div>
 
 
@@ -65,9 +65,15 @@
 
                 {{-- Aggiustare old dell immagine --}}
                 <div class="mb-3">
+                    @if($apartment->images)
+                        <div>
+                            <img src="{{ asset('storage/' . $apartment->images) }}" alt="&#9888;" width="150">
+                        </div>
+                    @endif
+
                     <label for="images" class="form-label">Immagine</label>
 
-                    <input type="file" class="form-control" id="images" name="images" value="{{ old('images', $apartment->image) }}">
+                    <input type="file" class="form-control" id="images" name="images">
                 </div>
 
 
@@ -78,7 +84,7 @@
                         <div class="form-check">
                             @foreach($services as $service)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}">
+                                    <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}" {{ $apartment->extraServices->contains($service) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="service-{{ $service->id }}">
                                         {{ $service->name }}
                                     </label>
