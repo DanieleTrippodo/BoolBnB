@@ -68,7 +68,7 @@
 </head>
 <body>
 
-    <div class="header">
+    {{-- <div class="header">
         <div class="logo">
             <a href="/">BoolBnB</a>
         </div>
@@ -81,17 +81,30 @@
                 <a href="/register">Register</a>
             @endguest
         </div>
-    </div>
+    </div> --}}
+
+
+    {{-- Da fixare con i nomi giusti per titolo servizi ecc  DANIELE--}}
 
     <div class="container">
         <div class="apartment-details">
             <h2>{{ $apartment->title }}</h2>
             <p><strong>Città:</strong> {{ $apartment->city }}</p>
             <p><strong>Prezzo:</strong> €{{ $apartment->price }}</p>
-            <p><strong>Servizi:</strong> {{ implode(', ', $apartment->services) }}</p>
+
+            <!-- Gestione sicura dei servizi -->
+            <p><strong>Servizi:</strong>
+                @if(is_array($apartment->services) && count($apartment->services) > 0)
+                    {{ implode(', ', $apartment->services) }}
+                @else
+                    Nessun servizio disponibile.
+                @endif
+            </p>
+
             <p><strong>Descrizione:</strong> {{ $apartment->description }}</p>
         </div>
     </div>
+
 
 </body>
 </html>
