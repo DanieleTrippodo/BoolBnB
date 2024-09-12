@@ -21,33 +21,33 @@
 
                 <div class="mb-3">
                     <label for="title" class="form-label">Titolo</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $apartment->title) }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="rooms_num" class="form-label">Numero di Stanze</label>
-                    <input type="number" class="form-control" id="rooms_num" name="rooms_num" value="{{ old('rooms_num') }}" required>
+                    <input type="number" class="form-control" id="rooms_num" name="rooms_num" value="{{ old('rooms_num', $apartment->rooms_num) }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="beds_num" class="form-label">Numero di Letti</label>
-                    <input type="number" class="form-control" id="beds_num" name="beds_num" value="{{ old('beds_num') }}" required>
+                    <input type="number" class="form-control" id="beds_num" name="beds_num" value="{{ old('beds_num', $apartment->beds_num) }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="bathroom_num" class="form-label">Numero di Bagni</label>
-                    <input type="number" class="form-control" id="bathroom_num" name="bathroom_num" value="{{ old('bathroom_num') }}" required>
+                    <input type="number" class="form-control" id="bathroom_num" name="bathroom_num" value="{{ old('bathroom_num', $apartment->bathroom_num) }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="sq_mt" class="form-label">Metri Quadrati</label>
-                    <input type="number" class="form-control" id="sq_mt" name="sq_mt" value="{{ old('sq_mt') }}" required>
+                    <input type="number" class="form-control" id="sq_mt" name="sq_mt" value="{{ old('sq_mt', $apartment->sq_mt) }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="address" class="form-label">Indirizzo</label>
-                    <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
-                    <ul id="suggestions-list" style="list-style: none; padding: 0;"></ul>
+                    <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $apartment->address) }}" required>
+                    <ul id="suggestions-list" style="list-style: none; padding: .75rem;"></ul>
                 </div>
 {{--
                 <div class="mb-3">
@@ -63,7 +63,7 @@
                 <div class="mb-3">
                     <label for="images" class="form-label">Immagine</label>
 
-                    <input type="file" class="form-control" id="images" name="images" value="{{ old('images') }}">
+                    <input type="file" class="form-control" id="images" name="images" value="{{ old('images', $apartment->images) }}">
                 </div>
 
                 <!-- Extra Services -->
@@ -72,7 +72,7 @@
                         <div class="form-check">
                             @foreach($services as $service)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}">
+                                    <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}" {{ in_array($service->id, old('extra_services', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="service-{{ $service->id }}">
                                         {{ $service->name }}
                                     </label>

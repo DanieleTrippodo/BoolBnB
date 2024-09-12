@@ -25,12 +25,12 @@ class ApartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Apartment $apartment)
     {
         // Recupera tutti i servizi extra per il form di creazione
         $services = ExtraService::all();
 
-        return view('user.apartment.create', compact('services'));
+        return view('user.apartment.create', compact('services','apartment'));
     }
 
     /**
