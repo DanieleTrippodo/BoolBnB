@@ -73,7 +73,7 @@
     <!-- Header -->
     <div class="header d-flex justify-content-between align-items-center">
         <div class="logo">
-            <a href="/">
+            <a href="{{ route('home') }}">
                 <img src="{{ asset('img/Logo_BoolBnB_.png') }}" alt="BoolBnB Logo">
             </a>
         </div>
