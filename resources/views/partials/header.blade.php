@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <!-- Nome del sito che punta alla home (guest.index) -->
-        <a class="navbar-brand" href="{{ route('guest.index') }}">
+        <a class="navbar-brand" href="{{ route('user.apartments.index') }}">
             {{ config('app.name', 'BoolBnB') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
