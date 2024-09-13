@@ -22,8 +22,7 @@
                             <strong>Letti:</strong> {{ $apartment->beds_num }}<br>
                             <strong>Bagni:</strong> {{ $apartment->bathroom_num }}<br>
                             <strong>Metri quadrati:</strong> {{ $apartment->sq_mt }} m²<br>
-                            <strong>Latitudine:</strong> {{ $apartment->latitude }}<br>
-                            <strong>Longitudine:</strong> {{ $apartment->longitude }}
+
                         </p>
                     </div>
 
