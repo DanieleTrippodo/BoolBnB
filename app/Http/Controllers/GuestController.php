@@ -11,8 +11,8 @@ class GuestController extends Controller
     public function index()
     {
         $apartments = Apartment::where('visibility', true)
-                               ->with('extraServices')
-                               ->get();
+            ->with('extraServices')
+            ->get();
 
         // Restituisci la risposta con success e results
         return response()->json([
@@ -25,9 +25,9 @@ class GuestController extends Controller
     public function show($id)
     {
         $apartment = Apartment::where('id', $id)
-                              ->where('visibility', true)
-                              ->with('extraServices')
-                              ->firstOrFail();
+            ->where('visibility', true)
+            ->with('extraServices')
+            ->firstOrFail();
 
         // Restituisci la risposta con success e result
         return response()->json([
@@ -38,27 +38,27 @@ class GuestController extends Controller
 
     // Funzione di ricerca
     public function search(Request $request)
-{
-    // Verifica se il parametro 'location' è presente nella richiesta
-    $location = $request->input('location');
+    {
+        // Verifica se il parametro 'location' è presente nella richiesta
+        $location = $request->input('location');
 
-    // Se 'location' è presente, esegui la ricerca
-    if ($location) {
-        $apartments = Apartment::where('address', 'LIKE', '%' . $location . '%')
-                               ->where('visibility', true)
-                               ->with('extraServices')
-                               ->get();
-    } else {
-        // Se non viene specificata una location, restituisci tutti gli appartamenti
-        $apartments = Apartment::where('visibility', true)
-                               ->with('extraServices')
-                               ->get();
+        // Se 'location' è presente, esegui la ricerca
+        if ($location) {
+            $apartments = Apartment::where('address', 'LIKE', '%' . $location . '%')
+                ->where('visibility', true)
+                ->with('extraServices')
+                ->get();
+        } else {
+            // Se non viene specificata una location, restituisci tutti gli appartamenti
+            $apartments = Apartment::where('visibility', true)
+                ->with('extraServices')
+                ->get();
+        }
+
+        // Restituisci la risposta JSON
+        return response()->json([
+            'success' => true,
+            'results' => $apartments
+        ]);
     }
-
-    // Restituisci la risposta JSON
-    return response()->json([
-        'success' => true,
-        'results' => $apartments
-    ]);
-}
 }
