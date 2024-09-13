@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ApartmentController as UserApartmentController;
+use App\Http\Controllers\User\MessageController as UserMessageController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -63,4 +64,6 @@ Route::middleware('auth')->name('user.')->prefix('user/')->group(function () {
     Route::patch('/apartments/{apartment}/restore', [UserApartmentController::class, 'restore'])->name('apartments.restore');
     Route::delete('/apartments/{apartment}/permanent-delete', [UserApartmentController::class, 'permanentDelete'])->name('apartments.permanent.delete');
     Route::resource('/apartments', UserApartmentController::class);
+// Messaggi
+    Route::get('/messages', [UserMessageController::class, 'showMessagesForOwner'])->name('messages.index');
 });
