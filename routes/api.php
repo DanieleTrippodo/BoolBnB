@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\User\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/apartments', [GuestController::class, 'index']);  // Lista appartamenti
 Route::get('/apartments/{id}', [GuestController::class, 'show']);  // Dettagli appartamento
 Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
+
+Route::post('/messages', [MessageController::class, 'store']);  // Invia messaggio

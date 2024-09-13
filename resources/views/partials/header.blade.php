@@ -12,7 +12,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Lato sinistro della navbar -->
             <ul class="navbar-nav me-auto">
-
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Guest Side</a>
                 </li>
@@ -23,8 +22,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.apartments.create') }}">Crea un nuovo appartamento</a>
                     </li>
+                    <!-- Sezione per i messaggi -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('user.messages.index') }}">Messaggi ricevuti</a>
+                    </li>
                 @endauth
-
             </ul>
 
             <!-- Lato destro della navbar -->
