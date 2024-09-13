@@ -25,12 +25,12 @@ class ApartmentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Apartment $apartment)
+    public function create()
     {
         // Recupera tutti i servizi extra per il form di creazione
         $services = ExtraService::all();
 
-        return view('user.apartment.create', compact('services','apartment'));
+        return view('user.apartment.create', compact('services'));
     }
 
     /**
@@ -46,6 +46,7 @@ class ApartmentController extends Controller
             'bathroom_num' => 'required|integer|min:1',
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
+            'images' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // Validazione immagini
             'visibility' => 'boolean',
             'extra_services' => 'required|array|min:1',
         ]);
@@ -62,11 +63,10 @@ class ApartmentController extends Controller
             $latitude = $data['position']['lat'];
             $longitude = $data['position']['lon'];
         } else {
-            // Gestisci errori API
             return back()->withErrors(['message' => 'Non è stato possibile ottenere le coordinate.']);
         }
 
-        // Logica per caricare l'immagine
+        // Gestione del caricamento dell'immagine
         if ($request->hasFile('images')) {
             $img_path = Storage::put('uploads/apartments', $request->file('images'));
             $validatedData['images'] = $img_path;
@@ -83,7 +83,7 @@ class ApartmentController extends Controller
             'address' => $validatedData['address'],
             'latitude' => $latitude,
             'longitude' => $longitude,
-            'images' => $validatedData['images'],
+            'images' => $validatedData['images'] ?? null,
             'visibility' => $validatedData['visibility'] ?? true,
         ]);
 
@@ -134,7 +134,7 @@ class ApartmentController extends Controller
             return redirect()->route('user.apartments.index')->with('error', 'Non hai accesso a questo appartamento.');
         }
 
-        // Validazione
+        // Validazione dei dati
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'rooms_num' => 'required|integer|min:1',
@@ -142,7 +142,7 @@ class ApartmentController extends Controller
             'bathroom_num' => 'required|integer|min:1',
             'sq_mt' => 'required|integer|min:1',
             'address' => 'required|string|max:255',
-            'images' => 'nullable|string',
+            'images' => 'nullable|file|mimes:jpg,jpeg,png|max:2048', // Validazione immagini
             'visibility' => 'boolean',
             'extra_services' => 'required|array|min:1',
         ]);
@@ -162,12 +162,23 @@ class ApartmentController extends Controller
                 $validatedData['latitude'] = $data['position']['lat'];
                 $validatedData['longitude'] = $data['position']['lon'];
             } else {
-                // Gestisci errori API
                 return back()->withErrors(['message' => 'Non è stato possibile ottenere le coordinate.']);
             }
         }
 
-        // Aggiorna l'appartamento
+        // Gestione dell'upload dell'immagine
+        if ($request->hasFile('images')) {
+            // Elimina l'immagine esistente, se presente
+            if ($apartment->images) {
+                Storage::delete($apartment->images);
+            }
+
+            // Carica la nuova immagine e ottieni il percorso
+            $img_path = Storage::put('uploads/apartments', $request->file('images'));
+            $validatedData['images'] = $img_path;
+        }
+
+        // Aggiorna l'appartamento con i dati validati
         $apartment->update($validatedData);
 
         // Sincronizza i servizi extra selezionati
@@ -194,6 +205,9 @@ class ApartmentController extends Controller
         return redirect()->route('user.apartments.index')->with('success', 'Appartamento eliminato con successo!');
     }
 
+    /**
+     * Mostra gli appartamenti eliminati.
+     */
     public function deletedIndex()
     {
         // Recupera solo gli appartamenti eliminati
@@ -202,6 +216,9 @@ class ApartmentController extends Controller
         return view('user.apartment.deleted-index', compact('apartments'));
     }
 
+    /**
+     * Ripristina l'appartamento eliminato.
+     */
     public function restore(string $id)
     {
         // Recupera l'appartamento eliminato
@@ -213,6 +230,9 @@ class ApartmentController extends Controller
         return redirect()->route('user.apartments.deleted')->with('success', 'Appartamento ripristinato con successo!');
     }
 
+    /**
+     * Eliminazione permanente dell'appartamento.
+     */
     public function permanentDelete(string $id)
     {
         // Recupera l'appartamento eliminato
