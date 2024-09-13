@@ -14,10 +14,14 @@ class GuestController extends Controller
         return view('guest.index', compact('apartments'));
     }
 
-    // Mostra i dettagli di un appartamento
     public function show($id)
     {
-        $apartment = Apartment::where('id', $id)->where('visibility', true)->firstOrFail();
+        // Carica l'appartamento e i suoi servizi solo se è visibile
+        $apartment = Apartment::where('id', $id)
+                              ->where('visibility', true)
+                              ->with('extraServices')  // Carica i servizi associati
+                              ->firstOrFail();
+
         return view('guest.show', compact('apartment'));
     }
 
