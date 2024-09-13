@@ -50,7 +50,7 @@ Route::get('/', function () {
 });
 
 
-
+Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
 Auth::routes();
 

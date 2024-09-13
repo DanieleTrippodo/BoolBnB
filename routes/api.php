@@ -28,4 +28,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/apartments', [GuestController::class, 'index']);  // Lista appartamenti
 Route::get('/apartments/{id}', [GuestController::class, 'show']);  // Dettagli appartamento
-Route::get('/apartments/search', [GuestController::class, 'search']);  // Ricerca appartamenti
+Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
