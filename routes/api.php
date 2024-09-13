@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\GuestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,10 @@ Route::resource('user', UserController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+
+Route::get('/apartments', [GuestController::class, 'index']);  // Lista appartamenti
+Route::get('/apartments/{id}', [GuestController::class, 'show']);  // Dettagli appartamento
+Route::get('/apartments/search', [GuestController::class, 'search']);  // Ricerca appartamenti
