@@ -41,7 +41,7 @@
 @endsection
 
 
-
+{{-- new dev --}}
 @section('custom-scripts')
     @vite('resources/js/delete-confirm.js')
 @endsection

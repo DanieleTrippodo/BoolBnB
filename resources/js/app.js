@@ -9,6 +9,9 @@ import './register-validation';
 import './autocomplete'
 import './dinamic-search'
 
+import './autocomplete';
+
+
 import { createApp } from 'vue';
 import './register-validation';
 
