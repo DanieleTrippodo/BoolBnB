@@ -39,25 +39,26 @@ class GuestController extends Controller
     // Funzione di ricerca
     public function search(Request $request)
 {
-    // Ottieni il parametro location dalla query string
+    // Verifica se il parametro 'location' è presente nella richiesta
     $location = $request->input('location');
 
-    // Inizializza la query sugli appartamenti
-    $apartments = Apartment::query();
-
-    // Filtro per location (se fornito)
+    // Se 'location' è presente, esegui la ricerca
     if ($location) {
-        $apartments->where('address', 'LIKE', "%{$location}%");
+        $apartments = Apartment::where('address', 'LIKE', '%' . $location . '%')
+                               ->where('visibility', true)
+                               ->with('extraServices')
+                               ->get();
+    } else {
+        // Se non viene specificata una location, restituisci tutti gli appartamenti
+        $apartments = Apartment::where('visibility', true)
+                               ->with('extraServices')
+                               ->get();
     }
 
-    // Esegui la query per appartamenti visibili e con eventuali filtri
-    $result = $apartments->where('visibility', true)
-                         ->with('extraServices')  // Carica i servizi associati
-                         ->get();
-
-    // Restituisci i risultati come JSON
+    // Restituisci la risposta JSON
     return response()->json([
         'success' => true,
-        'results' => $result
+        'results' => $apartments
     ]);
+}
 }
