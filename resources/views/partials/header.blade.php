@@ -14,7 +14,7 @@
             <ul class="navbar-nav me-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Home</a>
+                    <a class="nav-link" href="{{ url('/') }}">Guest Side</a>
                 </li>
                 @auth
                     <li class="nav-item">

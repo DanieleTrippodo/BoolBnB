@@ -7,48 +7,57 @@ use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
-    // rendiamo visibili tutti gli appartamenti
+    // Ritorna tutti gli appartamenti visibili
     public function index()
     {
-        $apartments = Apartment::where('visibility', true)->get();
-        return view('guest.index', compact('apartments'));
+        $apartments = Apartment::where('visibility', true)
+                               ->with('extraServices')
+                               ->get();
+
+        // Restituisci la risposta con success e results
+        return response()->json([
+            'success' => true,
+            'results' => $apartments
+        ]);
     }
 
+    // Mostra un singolo appartamento con i suoi dettagli e servizi
     public function show($id)
     {
-        // Carica l'appartamento e i suoi servizi solo se è visibile
         $apartment = Apartment::where('id', $id)
                               ->where('visibility', true)
-                              ->with('extraServices')  // Carica i servizi associati
+                              ->with('extraServices')
                               ->firstOrFail();
 
-        return view('guest.show', compact('apartment'));
+        // Restituisci la risposta con success e result
+        return response()->json([
+            'success' => true,
+            'result' => $apartment
+        ]);
     }
 
-
+    // Funzione di ricerca
     public function search(Request $request)
 {
+    // Ottieni il parametro location dalla query string
     $location = $request->input('location');
 
     // Inizializza la query sugli appartamenti
     $apartments = Apartment::query();
 
-    // Filtro per location
+    // Filtro per location (se fornito)
     if ($location) {
         $apartments->where('address', 'LIKE', "%{$location}%");
     }
 
-    // Ottieni i risultati della ricerca
-    $result = $apartments->get();
+    // Esegui la query per appartamenti visibili e con eventuali filtri
+    $result = $apartments->where('visibility', true)
+                         ->with('extraServices')  // Carica i servizi associati
+                         ->get();
 
-    // Restituisce i risultati in formato JSON
-    return response()->json($result);
-}
-
-
-
-    // Ritorna la view con i risultati della ricerca
-
-
-
+    // Restituisci i risultati come JSON
+    return response()->json([
+        'success' => true,
+        'results' => $result
+    ]);
 }
