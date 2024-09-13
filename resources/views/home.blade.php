@@ -47,7 +47,7 @@
     <div class="jumbotron">
         <h1>Benvenuto su BoolBnB!</h1>
         <p>Trova il tuo appartamento ideale con un semplice clic.</p>
-        <a class="btn btn-secondary btn-lg" href="{{ route('guest.search') }}">Cerca appartamenti</a>
+        <a class="btn btn-secondary btn-lg" href="{{ route('guest.index') }}">Cerca appartamenti</a>
     </div>
 
     <!-- Informazioni aggiuntive -->

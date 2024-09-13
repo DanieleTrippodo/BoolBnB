@@ -137,9 +137,10 @@
                         <div class="col-md-4 mb-4">
                             <div class="card h-100 shadow-sm">
                                 @if ($apartment->images)
-                                    <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top" alt="Immagine mancante">
+                                <img src="{{ asset('storage/' . $apartment->images) }}" class="card-img-top" alt="Immagine mancante">
+
                                 @else
-                                    <img src="https://via.placeholder.com/300" class="card-img-top" alt="Immagine segnaposto">
+                                    <img src="..." class="card-img-top" alt="Immagine segnaposto">
                                 @endif
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $apartment->title }}</h5>

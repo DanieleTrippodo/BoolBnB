@@ -1,6 +1,58 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
+
+<style>
+    /* Nuova palette di colori */
+    :root {
+        --color-background: #fefbfa;
+        --color-primary: #003f6c;
+        --color-secondary: #a34a62;
+        --color-text-light: #ffffff;
+    }
+
+    body {
+        background-color: var(--color-background);
+        color: var(--color-primary);
+    }
+
+    .form-control {
+        background-color: var(--color-background);
+        color: var(--color-primary);
+        border: 1px solid var(--color-secondary);
+        border-radius: 5px;
+    }
+
+    .form-control:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 5px rgba(0, 63, 108, 0.5);
+    }
+
+    label {
+        color: var(--color-primary);
+    }
+
+    .btn-primary {
+        background-color: var(--color-primary);
+        color: var(--color-text-light);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--color-secondary);
+    }
+
+    .btn-secondary {
+        background-color: var(--color-secondary);
+        color: var(--color-text-light);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+
+</style>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -49,38 +101,26 @@
                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
                     <ul id="suggestions-list" style="list-style: none; padding: 0;"></ul>
                 </div>
-{{--
-                <div class="mb-3">
-                    <label for="latitude" class="form-label">Latitudine</label>
-                    <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude') }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="longitude" class="form-label">Longitudine</label>
-                    <input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude') }}" required>
-                </div> --}}
 
                 <div class="mb-3">
                     <label for="images" class="form-label">Immagine</label>
-
                     <input type="file" class="form-control" id="images" name="images" value="{{ old('images') }}">
                 </div>
 
                 <!-- Extra Services -->
-                    <div class="mb-3">
-                        <label for="extra_services" class="form-label">Servizi Extra</label>
-                        <div class="form-check">
-                            @foreach($services as $service)
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}">
-                                    <label class="form-check-label" for="service-{{ $service->id }}">
-                                        {{ $service->name }}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
+                <div class="mb-3">
+                    <label for="extra_services" class="form-label">Servizi Extra</label>
+                    <div class="form-check">
+                        @foreach($services as $service)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="extra_services[]" value="{{ $service->id }}" id="service-{{ $service->id }}">
+                                <label class="form-check-label" for="service-{{ $service->id }}">
+                                    {{ $service->name }}
+                                </label>
+                            </div>
+                        @endforeach
                     </div>
-
+                </div>
 
                 <div class="mb-3">
                     <label for="visibility" class="form-label">Visibilità</label>
@@ -101,7 +141,6 @@
 </div>
 
 @endsection
-
 
 @section('custom-scripts')
     @vite('resources/js/autocomplete.js')
