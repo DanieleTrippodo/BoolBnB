@@ -55,7 +55,10 @@ Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
 Auth::routes();
 
-// Route::get('/home', [GuestController::class, 'index'])->name('home');
+// Reindirizza /home a user.apartments.index
+Route::get('/home', function () {
+    return redirect()->route('user.apartments.index');
+})->name('home');
 // // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->name('user.')->prefix('user/')->group(function () {
