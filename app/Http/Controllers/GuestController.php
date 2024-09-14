@@ -7,44 +7,104 @@ use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
-    // rendiamo visibili tutti gli appartamenti
+    // Ritorna tutti gli appartamenti visibili
     public function index()
     {
-        $apartments = Apartment::where('visibility', true)->get();
-        return view('guest.index', compact('apartments'));
+        $apartments = Apartment::where('visibility', true)
+            ->with('extraServices')
+            ->get();
+
+        // Restituisci la risposta con success e results
+        return response()->json([
+            'success' => true,
+            'results' => $apartments
+        ]);
     }
 
-    // Mostra i dettagli di un appartamento
+    // Mostra un singolo appartamento con i suoi dettagli e servizi
     public function show($id)
     {
-        $apartment = Apartment::where('id', $id)->where('visibility', true)->firstOrFail();
-        return view('guest.show', compact('apartment'));
-    }
+        $apartment = Apartment::where('id', $id)
+            ->where('visibility', true)
+            ->with('extraServices')
+            ->firstOrFail();
 
+        // Restituisci la risposta con success e result
+        return response()->json([
+            'success' => true,
+            'result' => $apartment
+        ]);
+    }
 
     public function search(Request $request)
-{
-    $location = $request->input('location');
+    {
+        // Recupera la location e il raggio (default a 20 km)
+        $location = $request->input('location');
+        $radius = $request->input('radius', 20); // Il raggio predefinito è 20 km
 
-    // Inizializza la query sugli appartamenti
-    $apartments = Apartment::query();
+        // Se non viene fornita la località, restituisci tutti gli appartamenti
+        if (!$location) {
+            $apartments = Apartment::where('visibility', true)
+                                   ->with('extraServices')
+                                   ->get();
 
-    // Filtro per location
-    if ($location) {
-        $apartments->where('address', 'LIKE', "%{$location}%");
+            return response()->json([
+                'success' => true,
+                'results' => $apartments
+            ]);
+        }
+
+        // Geocodifica la location per ottenere latitudine e longitudine
+        $coordinates = $this->geocodeLocation($location);
+
+        if (!$coordinates) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Località non trovata',
+            ], 404);
+        }
+
+        $latitude = $coordinates['lat'];
+        $longitude = $coordinates['lng'];
+
+        // Calcola la distanza con la formula dell'Haversine e filtra gli appartamenti
+        $apartments = Apartment::selectRaw(
+            "*, (6371 * acos(cos(radians(?))
+            * cos(radians(latitude))
+            * cos(radians(longitude) - radians(?))
+            + sin(radians(?))
+            * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude]
+        )
+        ->having("distance", "<", $radius)
+        ->where('visibility', true)
+        ->with('extraServices')
+        ->get();
+
+        // Restituisci la risposta JSON
+        return response()->json([
+            'success' => true,
+            'results' => $apartments
+        ]);
     }
 
-    // Ottieni i risultati della ricerca
-    $result = $apartments->get();
+    // Funzione per geocodificare la località usando un'API esterna (TomTom, Google, ecc.)
+    private function geocodeLocation($location)
+    {
+        // Esempio di chiamata API (sostituisci con la tua API di geocodifica)
+        $apiKey = 'S14VN8AzM8BoQ73JkRu5N2PqtkZtrrjN';  // Aggiungi la chiave API nel file .env
+        $url = "https://api.tomtom.com/search/2/geocode/".urlencode($location).".json?key=".$apiKey;
 
-    // Restituisce i risultati in formato JSON
-    return response()->json($result);
-}
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
 
+        if (isset($data['results'][0]['position'])) {
+            return [
+                'lat' => $data['results'][0]['position']['lat'],
+                'lng' => $data['results'][0]['position']['lon']
+            ];
+        }
 
-
-    // Ritorna la view con i risultati della ricerca
-
-
+        return null; // Se la località non è trovata
+    }
 
 }

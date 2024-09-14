@@ -50,7 +50,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email">
+                                        value="{{ old('email') }}" required autocomplete="email" placeholder="Campo obbligatorio">
                                     <span id="emailError" style="color: red; display: none;"></span>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -68,7 +68,7 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
+                                        required autocomplete="new-password" placeholder="Campo obbligatorio">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -78,14 +78,14 @@
                                 </div>
                             </div>
 
-                            <div class="row m-3">
+                            <div class="row mb-3">
                                 <label for="password-confirm"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Conferma Password') }}<span
                                         style="color: red;">*</span></label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password">
+                                        name="password_confirmation" required autocomplete="new-password" placeholder="Campo obbligatorio">
                                     <span id="passwordMismatch" style="color: red; display: none;">Le password non
                                         coincidono.</span>
                                 </div>
@@ -104,50 +104,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('password-confirm').value;
-            const email = document.getElementById('email').value;
-            const emailInput = document.getElementById('email');
-            let emailError = '';
-
-            // Controllo che le password coincidano
-            if (password !== confirmPassword) {
-                event.preventDefault();
-                document.getElementById('passwordMismatch').style.display = 'block';
-                document.getElementById('passwordMismatch').innerText =
-                'Le password non coincidono.';
-            } else {
-                document.getElementById('passwordMismatch').style.display = 'none';
-            }
-
-            // Validazione
-            const lowercaseEmail = email.toLowerCase();
-            emailInput.value = lowercaseEmail;
-            const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-
-            // Controllo caratteri maiuscoli
-            if (email !== lowercaseEmail) {
-                emailError = 'L\'email deve contenere solo caratteri minuscoli.';
-            }
-            // Controllo chiocciola
-            else if (!email.includes('@')) {
-                emailError = 'L\'email deve contenere una chiocciola (@).';
-            }
-            // Controllo dominio valido
-            else if (!emailPattern.test(lowercaseEmail)) {
-                emailError = 'Inserisci un dominio valido (ad esempio .com, .net, .it).';
-            }
-
-            if (emailError) {
-                event.preventDefault();
-                document.getElementById('emailError').innerText = emailError;
-                document.getElementById('emailError').style.display = 'block';
-            } else {
-                document.getElementById('emailError').style.display = 'none';
-            }
-        });
-    </script>
 @endsection
