@@ -9,51 +9,23 @@ use Illuminate\Support\Facades\Auth;
 /* per gestire le rotte del guest */
 use App\Http\Controllers\GuestController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-
-// Rotte per i guest
-// Route::prefix('guest')->group(function () {
-//     Route::get('/', [GuestController::class, 'index'])->name('guest.index');  // Mostra lista appartamenti
-//     Route::get('/apartment/{id}', [GuestController::class, 'show'])->name('guest.show');  // Mostra dettagli appartamento
-// });
-// /* Rotte per la ricerca degli appartamenti */
-// Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
-
-
-
-
-// Route::get('/', function () {
-//     return view('/pages/welcome');
-// });
-
-// Route::get('/', function () {
-//     return redirect()->route('home');
-// });
-
+/* -------------Aggiornato---------------------- */
 Route::get('/', function () {
-    if (Auth::check()) {
-        // Se l'utente è autenticato, reindirizzalo alla pagina dei suoi appartamenti
-        return redirect()->route('user.apartments.index');
-    } else {
-        // Se non è autenticato, reindirizzalo alla pagina di login
-        return redirect()->route('login');
-    }
-});
+    return view('pages.welcome');
+})->name('home');
+/* -------------Aggiornato---------------------- */
+
+
 
 
 Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
-Auth::routes();
+
+/* -------------Aggiornato---------------------- */
+Auth::routes(['register' => true, 'login' => true]);
+/* -------------Aggiornato---------------------- */
+
 
 // Reindirizza /home a user.apartments.index
 Route::get('/home', function () {

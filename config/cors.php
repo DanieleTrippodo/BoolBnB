@@ -2,6 +2,9 @@
 
 return [
 
+    'allowed_origins' => ['http://localhost:5174'], // cambia la porta qui con quella su vite.config.js
+
+
     /*
     |--------------------------------------------------------------------------
     | Cross-Origin Resource Sharing (CORS) Configuration
