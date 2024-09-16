@@ -50,11 +50,13 @@
                     <input type="number" class="form-control" id="sq_mt" name="sq_mt" value="{{ old('sq_mt', $apartment->sq_mt) }}" required>
                 </div>
 
-                <!-- Indirizzo -->
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
+                    <!-- L'input dell'indirizzo usa il vecchio valore del database come valore di default -->
                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $apartment->address) }}" required>
+                    <ul id="suggestions-list" style="list-style-type: none; padding: 0;"></ul>
                 </div>
+
 
                 <!-- Visualizza immagine esistente -->
                 <div class="mb-3">

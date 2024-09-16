@@ -47,9 +47,12 @@
                 <div class="mb-3">
                     <label for="address" class="form-label">Indirizzo</label>
                     <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" required>
-                    <ul id="suggestions-list" style="list-style: none; padding: 0;"></ul>
+                    <ul id="suggestions-list">
+                        <!-- Suggerimenti generati dinamicamente -->
+                        <!-- Es: <li class="active">Indirizzo 1</li> -->
+                        <!-- Es: <li>Indirizzo 2</li> -->
+                    </ul>
                 </div>
-
 {{--
                 <div class="mb-3">
                     <label for="latitude" class="form-label">Latitudine</label>

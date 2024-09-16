@@ -12,3 +12,36 @@
 
 // styile del footer
 @import 'partials/footer';
+
+
+#suggestions-list {
+    margin-top: 5px;
+    padding: 0;
+    list-style-type: none;
+    // border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px; // Limita l'altezza massima
+    overflow-y: auto; // Aggiunge lo scroll se i suggerimenti sono troppi
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f1f1; // Divisore tra gli elementi
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  #suggestions-list li:last-child {
+    border-bottom: none; // Rimuove la linea sotto l'ultimo elemento
+  }
+
+  #suggestions-list li:hover {
+    background-color: #f0f8ff; // Cambia colore quando si passa il mouse
+  }
+
+  #suggestions-list li.active {
+    background-color: #007bff; // Colore per l'elemento attivo
+    color: white;
+  }
