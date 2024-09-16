@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ApartmentController as UserApartmentController;
+use App\Http\Controllers\User\MessageController as UserMessageController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -21,12 +22,12 @@ use App\Http\Controllers\GuestController;
 
 
 // Rotte per i guest
-Route::prefix('guest')->group(function () {
-    Route::get('/', [GuestController::class, 'index'])->name('guest.index');  // Mostra lista appartamenti
-    Route::get('/apartment/{id}', [GuestController::class, 'show'])->name('guest.show');  // Mostra dettagli appartamento
-});
-/* Rotte per la ricerca degli appartamenti */
-Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
+// Route::prefix('guest')->group(function () {
+//     Route::get('/', [GuestController::class, 'index'])->name('guest.index');  // Mostra lista appartamenti
+//     Route::get('/apartment/{id}', [GuestController::class, 'show'])->name('guest.show');  // Mostra dettagli appartamento
+// });
+// /* Rotte per la ricerca degli appartamenti */
+// Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
 
 
@@ -35,20 +36,37 @@ Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 //     return view('/pages/welcome');
 // });
 
+// Route::get('/', function () {
+//     return redirect()->route('home');
+// });
+
 Route::get('/', function () {
-    return redirect()->route('home');
+    if (Auth::check()) {
+        // Se l'utente è autenticato, reindirizzalo alla pagina dei suoi appartamenti
+        return redirect()->route('user.apartments.index');
+    } else {
+        // Se non è autenticato, reindirizzalo alla pagina di login
+        return redirect()->route('login');
+    }
 });
+
+
+Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
 Auth::routes();
 
-Route::get('/home', [GuestController::class, 'index'])->name('home');
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Reindirizza /home a user.apartments.index
+Route::get('/home', function () {
+    return redirect()->route('user.apartments.index');
+})->name('home');
+// // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')->name('user.')->prefix('user/')->group(
-    function () {
-        // Route::get('home', [AdminHomeController::class, 'index'])->name('home');
-        Route::get('/apartments/deleted', [UserApartmentController::class, 'deletedIndex'])->name('apartments.deleted');
-        Route::patch('/apartments/{apartment}/restore', [UserApartmentController::class, 'restore'])->name('apartments.restore');
-        Route::delete('/apartments/{apartment}/permanent-delete', [UserApartmentController::class, 'permanentDelete'])->name('apartments.permanent.delete');
-        Route::resource('/apartments', UserApartmentController::class);
+Route::middleware('auth')->name('user.')->prefix('user/')->group(function () {
+    Route::get('/apartments', [UserApartmentController::class, 'index'])->name('apartments.index');
+    Route::get('/apartments/deleted', [UserApartmentController::class, 'deletedIndex'])->name('apartments.deleted');
+    Route::patch('/apartments/{apartment}/restore', [UserApartmentController::class, 'restore'])->name('apartments.restore');
+    Route::delete('/apartments/{apartment}/permanent-delete', [UserApartmentController::class, 'permanentDelete'])->name('apartments.permanent.delete');
+    Route::resource('/apartments', UserApartmentController::class);
+// Messaggi
+    Route::get('/messages', [UserMessageController::class, 'showMessagesForOwner'])->name('messages.index');
 });

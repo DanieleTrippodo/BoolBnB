@@ -9,9 +9,9 @@
                     <!-- Mostra l'immagine se esiste, altrimenti un'immagine di placeholder -->
                     @if ($apartment->images)
                         <img src="{{ asset('storage/' . $apartment->images) }}"
-                            alt="Immagine progetto {{ $apartment->title }}" class="img-fluid">
+                            alt="" class="img-fluid">
                     @else
-                        <img src="https://via.placeholder.com/800x400" class="card-img-top" alt="Immagine non disponibile">
+                        <span style="font-size: 100%">&#9888;</span>
                     @endif
 
                     <div class="card-body">
@@ -22,8 +22,7 @@
                             <strong>Letti:</strong> {{ $apartment->beds_num }}<br>
                             <strong>Bagni:</strong> {{ $apartment->bathroom_num }}<br>
                             <strong>Metri quadrati:</strong> {{ $apartment->sq_mt }} m²<br>
-                            <strong>Latitudine:</strong> {{ $apartment->latitude }}<br>
-                            <strong>Longitudine:</strong> {{ $apartment->longitude }}
+
                         </p>
                     </div>
 
