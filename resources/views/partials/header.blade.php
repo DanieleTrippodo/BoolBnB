@@ -13,7 +13,8 @@
             <!-- Lato sinistro della navbar -->
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Guest Side</a>
+                    <a href="http://localhost:5173" class="btn btn-primary">Sito Guest</a> <!-- Link al sito guest DA CAMBIARE IN BASE ALL'INDIRIZZO LOCALE di npm run dev di Vite del Progetto Vue -->
+
                 </li>
                 @auth
                     <li class="nav-item">
