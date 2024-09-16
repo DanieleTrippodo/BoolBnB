@@ -45,3 +45,33 @@
     background-color: #007bff; // Colore per l'elemento attivo
     color: white;
   }
+
+
+  .navbar {
+    background-color: #002b4d !important; /* Cambia il colore di sfondo della navbar */
+    color: white;
+}
+
+
+/* Cambia il colore del testo nella navbar */
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff !important; /* Cambia il colore dei link della navbar a bianco */
+}
+
+.navbar-light .navbar-brand {
+    color: #ffffff !important; /* Cambia il colore del brand/logo a bianco */
+}
+
+.navbar-light .navbar-toggler-icon {
+    filter: invert(1); /* Cambia l'icona del toggler a bianco */
+}
+
+.navbar-light .dropdown-menu {
+    background-color: #ffffff; /* Cambia lo sfondo del dropdown a bianco */
+    color: #000000; /* Colore del testo nei dropdown a nero */
+}
+
+.dropdown-item {
+    color: #000000 !important; /* Imposta il colore degli elementi del dropdown a nero per visibilità */
+}
+
