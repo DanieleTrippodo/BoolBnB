@@ -31,4 +31,11 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js',
         },
     },
+    // server: {
+    //     port: 5174,        // Imposta la porta fissa per Vite in Laravel (differente da quella di Vue.js)
+    //     strictPort: true,  // Se la porta è occupata, Vite fallisce invece di usare una porta diversa
+    //     hmr: {
+    //         host: 'localhost',
+    //     },
+    // },
 });
