@@ -45,13 +45,20 @@ class GuestController extends Controller
         // Se non viene fornita la località, restituisci tutti gli appartamenti
         if (!$location) {
             $apartments = Apartment::where('visibility', true)
-                                   ->with('extraServices')
-                                   ->get();
+                ->with('extraServices')
+                ->get();
+
+            if ($apartments->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Nessun appartamento trovato'
+                ], 404);
+            }
 
             return response()->json([
                 'success' => true,
                 'results' => $apartments
-            ]);
+            ], 200, ['Content-Type' => 'application/json']);
         }
 
         // Geocodifica la location per ottenere latitudine e longitudine
@@ -73,14 +80,21 @@ class GuestController extends Controller
             * cos(radians(latitude))
             * cos(radians(longitude) - radians(?))
             + sin(radians(?))
-            * sin(radians(latitude)))) AS distance", [$latitude, $longitude, $latitude]
+            * sin(radians(latitude)))) AS distance",
+            [$latitude, $longitude, $latitude]
         )
-        ->having("distance", "<", $radius)
-        ->where('visibility', true)
-        ->with('extraServices')
-        ->get();
+            ->having("distance", "<", $radius)
+            ->where('visibility', true)
+            ->with('extraServices')
+            ->get();
 
-        // Restituisci la risposta JSON
+        if ($apartments->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nessun appartamento trovato entro il raggio specificato'
+            ], 404);
+        }
+
         return response()->json([
             'success' => true,
             'results' => $apartments
@@ -92,7 +106,7 @@ class GuestController extends Controller
     {
         // Esempio di chiamata API (sostituisci con la tua API di geocodifica)
         $apiKey = 'S14VN8AzM8BoQ73JkRu5N2PqtkZtrrjN';  // Aggiungi la chiave API nel file .env
-        $url = "https://api.tomtom.com/search/2/geocode/".urlencode($location).".json?key=".$apiKey;
+        $url = "https://api.tomtom.com/search/2/geocode/" . urlencode($location) . ".json?key=" . $apiKey;
 
         $response = file_get_contents($url);
         $data = json_decode($response, true);
@@ -106,5 +120,4 @@ class GuestController extends Controller
 
         return null; // Se la località non è trovata
     }
-
 }

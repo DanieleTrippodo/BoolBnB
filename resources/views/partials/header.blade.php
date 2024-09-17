@@ -1,9 +1,10 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <!-- Nome del sito che punta alla home (guest.index) -->
+        <!-- Logo del sito che punta alla home (user.apartments.index) -->
         <a class="navbar-brand" href="{{ route('user.apartments.index') }}">
-            {{ config('app.name', 'BoolBnB') }}
+            <img src="{{ asset('img/Logo_BoolBnB_copy.png') }}" alt="BoolBnB Logo" style="height: 40px;">
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -12,9 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Lato sinistro della navbar -->
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Guest Side</a>
-                </li>
+
                 @auth
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.apartments.index') }}">I tuoi appartamenti</a>
@@ -31,6 +30,11 @@
 
             <!-- Lato destro della navbar -->
             <ul class="navbar-nav ms-auto">
+
+
+                <li class="nav-item">
+                    <a href="http://localhost:5173" class="btn btn-primary">Sito Guest</a> <!-- Link al sito guest DA CAMBIARE IN BASE ALL'INDIRIZZO LOCALE di npm run dev di Vite del Progetto Vue -->
+                </li>
                 <!-- Link di autenticazione -->
                 @guest
                     @if (Route::has('login'))
@@ -61,7 +65,7 @@
                             </form>
                         </div>
                     </li>
-                @endauth
+                @endguest
             </ul>
         </div>
     </div>
