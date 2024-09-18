@@ -14,7 +14,7 @@ class GuestController extends Controller
     public function index()
     {
         $apartments = Apartment::where('visibility', true)
-            ->with('extraServices')
+            ->with('extraServices', 'sponsors')
             ->get();
 
         // Restituisci la risposta con success e results
@@ -29,7 +29,7 @@ class GuestController extends Controller
     {
         $apartment = Apartment::where('id', $id)
             ->where('visibility', true)
-            ->with('extraServices')
+            ->with('extraServices','sponsors')
             ->firstOrFail();
 
         // Restituisci la risposta con success e result
@@ -41,12 +41,57 @@ class GuestController extends Controller
 
     public function search(Request $request)
 {
-    // Recupera i parametri di ricerca
+    // Recupera la location e il raggio (default a 20 km)
     $location = $request->input('location');
-    $radius = $request->input('radius', 20); // Raggio in km, default 20
-    $rooms_num = $request->input('rooms_num');
-    $beds_num = $request->input('beds_num');
-    $services = $request->input('services', []);
+    $radius = $request->input('radius', 20); // Il raggio predefinito è 20 km
+
+    // Recupera i campi opzionali aggiuntivi
+    $roomsNum = $request->input('rooms_num');
+    $bedsNum = $request->input('beds_num');
+    $bathroomsNum = $request->input('bathroom_num');
+    $extraServices = $request->input('extra_services', []); // Array di ID dei servizi extra
+
+    // Se non viene fornita la località, restituisci tutti gli appartamenti con i filtri aggiuntivi
+    if (!$location) {
+        $apartments = Apartment::where('visibility', true);
+
+        // Filtri per stanze, letti e bagni se forniti
+        if ($roomsNum) {
+            $apartments->where('rooms_num', '>=', $roomsNum);
+        }
+
+        if ($bedsNum) {
+            $apartments->where('beds_num', '>=', $bedsNum);
+        }
+
+        if ($bathroomsNum) {
+            $apartments->where('bathroom_num', '>=', $bathroomsNum);
+        }
+
+        // Filtra gli appartamenti che hanno i servizi extra selezionati
+        if (!empty($extraServices)) {
+            $apartments->whereHas('extraServices', function ($query) use ($extraServices) {
+                $query->whereIn('extra_services.id', $extraServices); // Specifica la tabella 'extra_services'
+            });
+        }
+
+        // Aggiungi sponsor e ordina per sponsor attivi
+        $apartments = $apartments->with(['extraServices', 'sponsors'])
+                                 ->orderByRaw('IF(EXISTS(SELECT 1 FROM apartment_sponsor WHERE apartment_sponsor.apartment_id = apartments.id AND apartment_sponsor.start_date <= NOW() AND (apartment_sponsor.end_date IS NULL OR apartment_sponsor.end_date >= NOW())), 1, 0) DESC')
+                                 ->get();
+
+        if ($apartments->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nessun appartamento trovato'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'results' => $apartments
+        ], 200, ['Content-Type' => 'application/json']);
+    }
 
     // Geocodifica la location per ottenere latitudine e longitudine
     $coordinates = $this->geocodeLocation($location);
@@ -61,118 +106,54 @@ class GuestController extends Controller
     $latitude = $coordinates['lat'];
     $longitude = $coordinates['lng'];
 
-    // Query di base per gli appartamenti visibili
-    $query = Apartment::selectRaw(
-        "apartments.*, (6371 * acos(cos(radians(?))
+    // Calcola la distanza con la formula dell'Haversine e filtra gli appartamenti
+    $apartments = Apartment::selectRaw(
+        "*, (6371 * acos(cos(radians(?))
         * cos(radians(latitude))
         * cos(radians(longitude) - radians(?))
         + sin(radians(?))
         * sin(radians(latitude)))) AS distance",
         [$latitude, $longitude, $latitude]
     )
-    ->where('visibility', true)
-    ->having('distance', '<=', $radius);
+    ->having("distance", "<", $radius)
+    ->where('visibility', true);
 
-    // Filtra per numero minimo di stanze
-    if ($rooms_num) {
-        $query->where('rooms_num', '>=', $rooms_num);
+    // Aggiungi i filtri opzionali per stanze, letti e bagni se forniti
+    if ($roomsNum) {
+        $apartments->where('rooms_num', '>=', $roomsNum);
     }
 
-    // Filtra per numero minimo di posti letto
-    if ($beds_num) {
-        $query->where('beds_num', '>=', $beds_num);
+    if ($bedsNum) {
+        $apartments->where('beds_num', '>=', $bedsNum);
     }
 
-    // Filtra per servizi aggiuntivi
-    if (!empty($services)) {
-        $query->whereHas('extraServices', function ($q) use ($services) {
-            $q->whereIn('extra_services.id', $services);
-        }, '=', count($services));
+    if ($bathroomsNum) {
+        $apartments->where('bathroom_num', '>=', $bathroomsNum);
     }
 
-    // Esegui la query e ottieni i risultati
-    $apartments = $query->with('extraServices')->get();
+    // Filtra gli appartamenti che hanno i servizi extra selezionati
+    if (!empty($extraServices)) {
+        $apartments->whereHas('extraServices', function ($query) use ($extraServices) {
+            $query->whereIn('extra_services.id', $extraServices);
+        });
+    }
+
+    // Aggiungi sponsor e ordina per sponsor attivi
+    $apartments = $apartments->with(['extraServices', 'sponsors'])
+                             ->orderByRaw('IF(EXISTS(SELECT 1 FROM apartment_sponsor WHERE apartment_sponsor.apartment_id = apartments.id AND apartment_sponsor.start_date <= NOW() AND (apartment_sponsor.end_date IS NULL OR apartment_sponsor.end_date >= NOW())), 1, 0) DESC')
+                             ->get();
 
     if ($apartments->isEmpty()) {
         return response()->json([
             'success' => false,
-            'message' => 'Nessun appartamento trovato con i criteri specificati',
+            'message' => 'Nessun appartamento trovato entro il raggio specificato'
         ], 404);
     }
 
     return response()->json([
         'success' => true,
-        'results' => $apartments,
+        'results' => $apartments
     ]);
 }
 
-/* per fare la chiamata GET alla rotta /search */
-public function getServices()
-{
-    $services = ExtraService::all();
-
-    return response()->json([
-        'success' => true,
-        'results' => $services,
-    ]);
-}
-
-
-// per passare gli appartamenti agli utenti non registrati
-public function getAllApartments()
-{
-    $apartments = Apartment::where('visibility', true)->with('extraServices')->get();
-
-    return response()->json([
-        'success' => true,
-        'results' => $apartments,
-    ]);
-}
-
-
-
-/* Logica dietro ai Meassaggi */
-public function storeMessage(Request $request, $id)
-{
-    // Validazione dei dati
-    $validatedData = $request->validate([
-        'sender_email' => 'required|email|max:255',
-        'message' => 'required|string',
-    ]);
-
-    // Recupera l'appartamento
-    $apartment = Apartment::findOrFail($id);
-
-    // Crea il nuovo messaggio
-    Message::create([
-        'apartment_id' => $apartment->id,
-        'name' => Auth::check() ? Auth::user()->name : 'Ospite',
-        'sender_email' => $validatedData['sender_email'],
-        'message' => $validatedData['message'],
-    ]);
-
-    return redirect()->back()->with('success', 'Messaggio inviato con successo!');
-}
-
-
-
-// Funzione per geocodificare la località usando un'API esterna (TomTom, Google, ecc.)
-private function geocodeLocation($location)
-    {
-        // Esempio di chiamata API (sostituisci con la tua API di geocodifica)
-        $apiKey = 'S14VN8AzM8BoQ73JkRu5N2PqtkZtrrjN';  // Aggiungi la chiave API nel file .env
-        $url = "https://api.tomtom.com/search/2/geocode/" . urlencode($location) . ".json?key=" . $apiKey;
-
-        $response = file_get_contents($url);
-        $data = json_decode($response, true);
-
-        if (isset($data['results'][0]['position'])) {
-            return [
-                'lat' => $data['results'][0]['position']['lat'],
-                'lng' => $data['results'][0]['position']['lon']
-            ];
-        }
-
-        return null; // Se la località non è trovata
-    }
 }
