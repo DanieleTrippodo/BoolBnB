@@ -54,11 +54,37 @@ class GuestController extends Controller
         $location = $request->input('location');
         $radius = $request->input('radius', 20); // Il raggio predefinito è 20 km
 
-        // Se non viene fornita la località, restituisci tutti gli appartamenti
+        // Recupera i campi opzionali aggiuntivi
+        $roomsNum = $request->input('rooms_num');
+        $bedsNum = $request->input('beds_num');
+        $bathroomsNum = $request->input('bathroom_num');
+        $extraServices = $request->input('extra_services', []); // Array di ID dei servizi extra
+
+        // Se non viene fornita la località, restituisci tutti gli appartamenti con i filtri aggiuntivi
         if (!$location) {
-            $apartments = Apartment::where('visibility', true)
-                ->with('extraServices')
-                ->get();
+            $apartments = Apartment::where('visibility', true);
+
+            // Filtri per stanze, letti e bagni se forniti
+            if ($roomsNum) {
+                $apartments->where('rooms_num', '>=', $roomsNum);
+            }
+
+            if ($bedsNum) {
+                $apartments->where('beds_num', '>=', $bedsNum);
+            }
+
+            if ($bathroomsNum) {
+                $apartments->where('bathroom_num', '>=', $bathroomsNum);
+            }
+
+            // Filtra gli appartamenti che hanno i servizi extra selezionati
+            if (!empty($extraServices)) {
+                $apartments->whereHas('extraServices', function ($query) use ($extraServices) {
+                    $query->whereIn('extra_services.id', $extraServices); // Specifica la tabella 'extra_services'
+                });
+            }
+
+            $apartments = $apartments->with('extraServices')->get();
 
             if ($apartments->isEmpty()) {
                 return response()->json([
@@ -96,9 +122,29 @@ class GuestController extends Controller
             [$latitude, $longitude, $latitude]
         )
             ->having("distance", "<", $radius)
-            ->where('visibility', true)
-            ->with('extraServices')
-            ->get();
+            ->where('visibility', true);
+
+        // Aggiungi i filtri opzionali per stanze, letti e bagni se forniti
+        if ($roomsNum) {
+            $apartments->where('rooms_num', '>=', $roomsNum);
+        }
+
+        if ($bedsNum) {
+            $apartments->where('beds_num', '>=', $bedsNum);
+        }
+
+        if ($bathroomsNum) {
+            $apartments->where('bathroom_num', '>=', $bathroomsNum);
+        }
+
+        // Filtra gli appartamenti che hanno i servizi extra selezionati
+        if (!empty($extraServices)) {
+            $apartments->whereHas('extraServices', function ($query) use ($extraServices) {
+                $query->whereIn('extra_services.id', $extraServices); // Specifica la tabella 'extra_services'
+            });
+        }
+
+        $apartments = $apartments->with('extraServices')->get();
 
         if ($apartments->isEmpty()) {
             return response()->json([
@@ -114,7 +160,7 @@ class GuestController extends Controller
     }
 
     // Funzione per geocodificare la località usando un'API esterna (TomTom, Google, ecc.)
-    private function geocodeLocation($location)
+    protected function geocodeLocation($location)
     {
         // Esempio di chiamata API (sostituisci con la tua API di geocodifica)
         $apiKey = 'S14VN8AzM8BoQ73JkRu5N2PqtkZtrrjN';  // Aggiungi la chiave API nel file .env
