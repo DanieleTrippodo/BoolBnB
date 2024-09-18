@@ -19,7 +19,20 @@ Route::get('/', function () {
 
 
 
+// per la ricerca avanzata
 Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
+
+
+
+/* Rotta per il /search */
+Route::get('/api/services', [GuestController::class, 'getServices'])->name('guest.services');
+
+
+/* rotta POST per gestire l'invio dei mesaggi */
+Route::post('/apartments/{apartment}/messages', [GuestController::class, 'storeMessage'])->name('guest.messages.store');
+
+/* rotta per visualizzare il dettaglio di un appartamento pubblico */
+Route::get('/apartments/{apartment}', [GuestController::class, 'show'])->name('guest.apartments.show');
 
 
 /* -------------Aggiornato---------------------- */

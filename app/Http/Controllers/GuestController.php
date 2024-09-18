@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+use App\Models\ExtraService;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GuestController extends Controller
 {
@@ -37,72 +40,113 @@ class GuestController extends Controller
     }
 
     public function search(Request $request)
-    {
-        // Recupera la location e il raggio (default a 20 km)
-        $location = $request->input('location');
-        $radius = $request->input('radius', 20); // Il raggio predefinito è 20 km
+{
+    // Recupera i parametri di ricerca
+    $location = $request->input('location');
+    $radius = $request->input('radius', 20); // Raggio in km, default 20
+    $rooms_num = $request->input('rooms_num');
+    $beds_num = $request->input('beds_num');
+    $services = $request->input('services', []);
 
-        // Se non viene fornita la località, restituisci tutti gli appartamenti
-        if (!$location) {
-            $apartments = Apartment::where('visibility', true)
-                ->with('extraServices')
-                ->get();
+    // Geocodifica la location per ottenere latitudine e longitudine
+    $coordinates = $this->geocodeLocation($location);
 
-            if ($apartments->isEmpty()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Nessun appartamento trovato'
-                ], 404);
-            }
-
-            return response()->json([
-                'success' => true,
-                'results' => $apartments
-            ], 200, ['Content-Type' => 'application/json']);
-        }
-
-        // Geocodifica la location per ottenere latitudine e longitudine
-        $coordinates = $this->geocodeLocation($location);
-
-        if (!$coordinates) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Località non trovata',
-            ], 404);
-        }
-
-        $latitude = $coordinates['lat'];
-        $longitude = $coordinates['lng'];
-
-        // Calcola la distanza con la formula dell'Haversine e filtra gli appartamenti
-        $apartments = Apartment::selectRaw(
-            "*, (6371 * acos(cos(radians(?))
-            * cos(radians(latitude))
-            * cos(radians(longitude) - radians(?))
-            + sin(radians(?))
-            * sin(radians(latitude)))) AS distance",
-            [$latitude, $longitude, $latitude]
-        )
-            ->having("distance", "<", $radius)
-            ->where('visibility', true)
-            ->with('extraServices')
-            ->get();
-
-        if ($apartments->isEmpty()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Nessun appartamento trovato entro il raggio specificato'
-            ], 404);
-        }
-
+    if (!$coordinates) {
         return response()->json([
-            'success' => true,
-            'results' => $apartments
-        ]);
+            'success' => false,
+            'message' => 'Località non trovata',
+        ], 404);
     }
 
-    // Funzione per geocodificare la località usando un'API esterna (TomTom, Google, ecc.)
-    private function geocodeLocation($location)
+    $latitude = $coordinates['lat'];
+    $longitude = $coordinates['lng'];
+
+    // Query di base per gli appartamenti visibili
+    $query = Apartment::selectRaw(
+        "apartments.*, (6371 * acos(cos(radians(?))
+        * cos(radians(latitude))
+        * cos(radians(longitude) - radians(?))
+        + sin(radians(?))
+        * sin(radians(latitude)))) AS distance",
+        [$latitude, $longitude, $latitude]
+    )
+    ->where('visibility', true)
+    ->having('distance', '<=', $radius);
+
+    // Filtra per numero minimo di stanze
+    if ($rooms_num) {
+        $query->where('rooms_num', '>=', $rooms_num);
+    }
+
+    // Filtra per numero minimo di posti letto
+    if ($beds_num) {
+        $query->where('beds_num', '>=', $beds_num);
+    }
+
+    // Filtra per servizi aggiuntivi
+    if (!empty($services)) {
+        $query->whereHas('extraServices', function ($q) use ($services) {
+            $q->whereIn('extra_services.id', $services);
+        }, '=', count($services));
+    }
+
+    // Esegui la query e ottieni i risultati
+    $apartments = $query->with('extraServices')->get();
+
+    if ($apartments->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Nessun appartamento trovato con i criteri specificati',
+        ], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'results' => $apartments,
+    ]);
+}
+
+/* per fare la chiamata GET alla rotta /search */
+public function getServices()
+{
+    $services = ExtraService::all();
+
+    return response()->json([
+        'success' => true,
+        'results' => $services,
+    ]);
+}
+
+
+
+
+/* Logica dietro ai Meassaggi */
+public function storeMessage(Request $request, $id)
+{
+    // Validazione dei dati
+    $validatedData = $request->validate([
+        'sender_email' => 'required|email|max:255',
+        'message' => 'required|string',
+    ]);
+
+    // Recupera l'appartamento
+    $apartment = Apartment::findOrFail($id);
+
+    // Crea il nuovo messaggio
+    Message::create([
+        'apartment_id' => $apartment->id,
+        'name' => Auth::check() ? Auth::user()->name : 'Ospite',
+        'sender_email' => $validatedData['sender_email'],
+        'message' => $validatedData['message'],
+    ]);
+
+    return redirect()->back()->with('success', 'Messaggio inviato con successo!');
+}
+
+
+
+// Funzione per geocodificare la località usando un'API esterna (TomTom, Google, ecc.)
+private function geocodeLocation($location)
     {
         // Esempio di chiamata API (sostituisci con la tua API di geocodifica)
         $apiKey = 'S14VN8AzM8BoQ73JkRu5N2PqtkZtrrjN';  // Aggiungi la chiave API nel file .env
