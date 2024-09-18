@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             MessageSeeder::class,
             ExtraServiceSeeder::class,
             ApartmentServiceSeeder::class,
-            // ApartmentSponsorSeeder::class, per ora non serve
+            ApartmentSponsorSeeder::class,
 
         ]);
 

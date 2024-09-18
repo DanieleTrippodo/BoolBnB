@@ -31,4 +31,6 @@ Route::get('/apartments', [GuestController::class, 'index']);  // Lista appartam
 Route::get('/apartments/{id}', [GuestController::class, 'show']);  // Dettagli appartamento
 Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
+Route::get('/extra-services', [GuestController::class, 'getAllExtraServices']);
+
 Route::post('/messages', [MessageController::class, 'store']);  // Invia messaggio
