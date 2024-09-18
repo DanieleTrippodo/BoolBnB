@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\ExtraService;
+use App\Models\Sponsor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -27,7 +28,7 @@ class GuestController extends Controller
     {
         $apartment = Apartment::where('id', $id)
             ->where('visibility', true)
-            ->with('extraServices')
+            ->with(['extraServices', 'sponsors']) // Aggiungi la relazione con gli sponsor
             ->firstOrFail();
 
         return response()->json([
@@ -131,5 +132,30 @@ class GuestController extends Controller
         }
 
         return null; // Se la località non è trovata
+    }
+
+    // Funzione per assegnare uno sponsor a un appartamento
+    public function assignSponsor(Request $request, $apartmentId)
+    {
+        // Validazione dei dati in ingresso
+        $request->validate([
+            'sponsor_id' => 'required|exists:sponsors,id',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after:start_date',
+        ]);
+
+        // Trova l'appartamento tramite ID
+        $apartment = Apartment::findOrFail($apartmentId);
+
+        // Associa lo sponsor all'appartamento con le date specificate
+        $apartment->sponsors()->attach($request->sponsor_id, [
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sponsor assegnato correttamente!'
+        ]);
     }
 }
