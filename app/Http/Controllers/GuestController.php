@@ -13,7 +13,7 @@ class GuestController extends Controller
     public function index()
     {
         $apartments = Apartment::where('visibility', true)
-            ->with('extraServices')
+            ->with('extraServices', 'sponsors')
             ->get();
 
         return response()->json([
@@ -27,7 +27,7 @@ class GuestController extends Controller
     {
         $apartment = Apartment::where('id', $id)
             ->where('visibility', true)
-            ->with('extraServices')
+            ->with('extraServices','sponsors')
             ->firstOrFail();
 
         return response()->json([
