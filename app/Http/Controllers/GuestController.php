@@ -118,6 +118,17 @@ public function getServices()
 }
 
 
+// per passare gli appartamenti agli utenti non registrati
+public function getAllApartments()
+{
+    $apartments = Apartment::where('visibility', true)->with('extraServices')->get();
+
+    return response()->json([
+        'success' => true,
+        'results' => $apartments,
+    ]);
+}
+
 
 
 /* Logica dietro ai Meassaggi */

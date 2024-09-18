@@ -31,4 +31,8 @@ Route::get('/apartments', [GuestController::class, 'index']);  // Lista appartam
 Route::get('/apartments/{id}', [GuestController::class, 'show']);  // Dettagli appartamento
 Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
-Route::post('/messages', [MessageController::class, 'store']);  // Invia messaggio
+/* Aggiornato */
+Route::post('/apartments/{apartment}/messages', [MessageController::class, 'store'])->name('api.messages.store');
+
+/* per mostrare gli appartamenti agli utenti non registrati */
+Route::get('/apartments', [GuestController::class, 'getAllApartments'])->name('api.apartments.index');
