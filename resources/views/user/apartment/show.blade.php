@@ -62,6 +62,7 @@
                             appartamenti</a>
                         <a href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-primary">Modifica
                             appartamento</a>
+                        <a href="{{ route('user.sponsorships.index', $apartment->id) }}" class="btn btn-primary">Sponsorizza</a>
                     </div>
                 </div>
             </div>
