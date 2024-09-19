@@ -7,12 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class ApartmentSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Definiamo i percorsi delle immagini disponibili
         $imagePaths = [
             'uploads/apartments/ac8b3SMlpUmTBQ8XBxVKNu6uWdpMMFThn0Z3q92k.jpg',
             'uploads/apartments/iLojtOgdat1CemRdTh8Qt0kTQPBydYn4XXYcvzDK.jpg',
@@ -25,15 +21,24 @@ class ApartmentSeeder extends Seeder
             'uploads/apartments/images (7).jpeg',
             'uploads/apartments/images (8).jpeg',
             'uploads/apartments/images (9).jpeg',
+            'uploads/apartments/images (10).jpeg',
+            'uploads/apartments/images (11).jpeg',
+            'uploads/apartments/images (12).jpeg',
+            'uploads/apartments/images (13).jpeg',
+            'uploads/apartments/images (14).jpeg',
+            'uploads/apartments/images (15).jpeg',
+            'uploads/apartments/images (16).jpeg',
+            'uploads/apartments/images (17).jpeg',
+            'uploads/apartments/images (18).jpeg',
+            'uploads/apartments/images (19).jpeg',
+            'uploads/apartments/images (20).jpeg',
         ];
 
-        // Funzione per assegnare un'immagine casuale
-        $getRandomImage = function() use ($imagePaths) {
+        $getRandomImage = function () use ($imagePaths) {
             return $imagePaths[array_rand($imagePaths)];
         };
 
         DB::table('apartments')->insert([
-            // Appartamenti per user_id 1
             [
                 'user_id' => 1,
                 'title' => 'Appartamento Centrale',
@@ -79,8 +84,36 @@ class ApartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            // Appartamenti per user_id 2
+            [
+                'user_id' => 1,
+                'title' => 'Appartamento Confortevole',
+                'rooms_num' => 3,
+                'beds_num' => 2,
+                'bathroom_num' => 2,
+                'sq_mt' => 95,
+                'address' => 'Via Del Mare, 15, Milano',
+                'latitude' => 45.4680,
+                'longitude' => 9.1890,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 1,
+                'title' => 'Appartamento Tranquillo',
+                'rooms_num' => 2,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 80,
+                'address' => 'Via Libertà, 18, Milano',
+                'latitude' => 45.4640,
+                'longitude' => 9.1820,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'user_id' => 2,
                 'title' => 'Bilocale vicino al Duomo',
@@ -126,8 +159,36 @@ class ApartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            // Appartamenti per user_id 3
+            [
+                'user_id' => 2,
+                'title' => 'Monolocale Moderno',
+                'rooms_num' => 1,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 50,
+                'address' => 'Via Manzoni, 9, Milano',
+                'latitude' => 45.4720,
+                'longitude' => 9.1920,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 2,
+                'title' => 'Bilocale Vista Parco',
+                'rooms_num' => 2,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 60,
+                'address' => 'Via Parco, 2, Milano',
+                'latitude' => 45.4620,
+                'longitude' => 9.2000,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'user_id' => 3,
                 'title' => 'Appartamento con Terrazza',
@@ -173,8 +234,36 @@ class ApartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            // Appartamenti per user_id 4
+            [
+                'user_id' => 3,
+                'title' => 'Appartamento di Lusso',
+                'rooms_num' => 4,
+                'beds_num' => 3,
+                'bathroom_num' => 2,
+                'sq_mt' => 160,
+                'address' => 'Via Margutta, 1, Roma',
+                'latitude' => 41.9087,
+                'longitude' => 12.4769,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 3,
+                'title' => 'Appartamento Classico',
+                'rooms_num' => 3,
+                'beds_num' => 2,
+                'bathroom_num' => 2,
+                'sq_mt' => 140,
+                'address' => 'Via del Corso, 23, Roma',
+                'latitude' => 41.9027,
+                'longitude' => 12.4831,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'user_id' => 4,
                 'title' => 'Appartamento Vista Mare',
@@ -220,8 +309,36 @@ class ApartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            // Appartamenti per user_id 5
+            [
+                'user_id' => 4,
+                'title' => 'Appartamento Luminoso',
+                'rooms_num' => 4,
+                'beds_num' => 3,
+                'bathroom_num' => 2,
+                'sq_mt' => 120,
+                'address' => 'Via Partenope, 18, Napoli',
+                'latitude' => 40.8418,
+                'longitude' => 14.2620,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 4,
+                'title' => 'Monolocale Economico',
+                'rooms_num' => 1,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 40,
+                'address' => 'Via San Carlo, 5, Napoli',
+                'latitude' => 40.8379,
+                'longitude' => 14.2505,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'user_id' => 5,
                 'title' => 'Appartamento in Centro Storico',
@@ -267,8 +384,36 @@ class ApartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            // Appartamenti per user_id 6
+            [
+                'user_id' => 5,
+                'title' => 'Appartamento Ristrutturato',
+                'rooms_num' => 2,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 80,
+                'address' => 'Via della Scala, 12, Firenze',
+                'latitude' => 43.7760,
+                'longitude' => 11.2498,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 5,
+                'title' => 'Bilocale Elegante',
+                'rooms_num' => 2,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 75,
+                'address' => 'Via Tornabuoni, 5, Firenze',
+                'latitude' => 43.7710,
+                'longitude' => 11.2511,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'user_id' => 6,
                 'title' => 'Villa con Giardino',
@@ -314,8 +459,36 @@ class ApartmentSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
-            // Appartamenti per user_id 7
+            [
+                'user_id' => 6,
+                'title' => 'Appartamento Moderno',
+                'rooms_num' => 3,
+                'beds_num' => 2,
+                'bathroom_num' => 1,
+                'sq_mt' => 100,
+                'address' => 'Via Monte Bianco, 20, Torino',
+                'latitude' => 45.0652,
+                'longitude' => 7.6780,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 6,
+                'title' => 'Monolocale Centrale',
+                'rooms_num' => 1,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 50,
+                'address' => 'Via Po, 15, Torino',
+                'latitude' => 45.0654,
+                'longitude' => 7.6847,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'user_id' => 7,
                 'title' => 'Monolocale Economico',
@@ -341,6 +514,36 @@ class ApartmentSeeder extends Seeder
                 'address' => 'Via del Porto, 5, Genova',
                 'latitude' => 44.4066,
                 'longitude' => 8.9485,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 7,
+                'title' => 'Bilocale Ristrutturato',
+                'rooms_num' => 2,
+                'beds_num' => 1,
+                'bathroom_num' => 1,
+                'sq_mt' => 75,
+                'address' => 'Via del Mare, 10, Genova',
+                'latitude' => 44.4072,
+                'longitude' => 8.9495,
+                'images' => $getRandomImage(),
+                'visibility' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id' => 7,
+                'title' => 'Appartamento Vista Mare',
+                'rooms_num' => 3,
+                'beds_num' => 2,
+                'bathroom_num' => 2,
+                'sq_mt' => 90,
+                'address' => 'Via della Lanterna, 12, Genova',
+                'latitude' => 44.4080,
+                'longitude' => 8.9510,
                 'images' => $getRandomImage(),
                 'visibility' => true,
                 'created_at' => now(),
