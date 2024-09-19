@@ -10,8 +10,6 @@ class ApartmentSeeder extends Seeder
     public function run(): void
     {
         $imagePaths = [
-            'uploads/apartments/ac8b3SMlpUmTBQ8XBxVKNu6uWdpMMFThn0Z3q92k.jpg',
-            'uploads/apartments/iLojtOgdat1CemRdTh8Qt0kTQPBydYn4XXYcvzDK.jpg',
             'uploads/apartments/images (1).jpeg',
             'uploads/apartments/images (2).jpeg',
             'uploads/apartments/images (3).jpeg',
@@ -25,14 +23,30 @@ class ApartmentSeeder extends Seeder
             'uploads/apartments/images (11).jpeg',
             'uploads/apartments/images (12).jpeg',
             'uploads/apartments/images (13).jpeg',
-            'uploads/apartments/images (14).jpeg',
             'uploads/apartments/images (15).jpeg',
-            'uploads/apartments/images (16).jpeg',
             'uploads/apartments/images (17).jpeg',
             'uploads/apartments/images (18).jpeg',
             'uploads/apartments/images (19).jpeg',
             'uploads/apartments/images (20).jpeg',
+            'uploads/apartments/images (21).jpeg',
+            'uploads/apartments/images (22).jpeg',
+            'uploads/apartments/images (23).jpeg',
+            'uploads/apartments/images (24).jpeg',
+            'uploads/apartments/images (25).jpeg',
+            'uploads/apartments/images (26).jpeg',
+            'uploads/apartments/images (27).jpeg',
+            'uploads/apartments/images (28).jpeg',
+            'uploads/apartments/images (29).jpeg',
+            'uploads/apartments/images (30).jpeg',
+            'uploads/apartments/images (32).jpeg',
+            'uploads/apartments/images (33).jpeg',
+            'uploads/apartments/images (34).jpeg',
+            'uploads/apartments/images (35).jpeg',
+            'uploads/apartments/images (36).jpeg',
+            'uploads/apartments/images (37).jpeg',
+            'uploads/apartments/images (38).jpeg',
         ];
+
 
         $getRandomImage = function () use ($imagePaths) {
             return $imagePaths[array_rand($imagePaths)];
