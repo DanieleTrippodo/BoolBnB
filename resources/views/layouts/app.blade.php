@@ -44,3 +44,12 @@
 </body>
 
 </html>
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f8f9fa, #ffc0cb, #0a3d62) ;
+    }
+    .py-4{
+        height: 100vh;
+    }
+</style>
