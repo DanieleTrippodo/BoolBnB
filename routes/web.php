@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ApartmentController as UserApartmentController;
 use App\Http\Controllers\User\MessageController as UserMessageController;
+use App\Http\Controllers\User\SponsorController as UserSponsorController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -69,4 +70,12 @@ Route::middleware('auth')->name('user.')->prefix('user/')->group(function () {
     Route::resource('/apartments', UserApartmentController::class);
 // Messaggi
     Route::get('/messages', [UserMessageController::class, 'showMessagesForOwner'])->name('messages.index');
+
+// Sponsorships
+
+Route::get('/sponsors/{apartment}', [UserSponsorController::class, 'sponsorshipsIndex'])->name('sponsorships.index');
+Route::post('/sponsors/{apartment}/assign', [UserSponsorController::class, 'assignSponsor'])->name('sponsorships.assign');
+
+
+
 });
