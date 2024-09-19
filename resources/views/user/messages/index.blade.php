@@ -26,7 +26,7 @@
                                     <td>{{ $message->name }}</td>
                                     <td>{{ $message->sender_email }}</td>
                                     <td>{{ $message->message }}</td>
-                                    <td>{{ $message->created_at->format('d/m/Y H:i') }}</td>
+                                    <td class="date-column">{{ $message->created_at->format('d/m/Y H:i') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -45,56 +45,63 @@
     }
 
     .container {
-        padding: 1.2rem;
-    }
-
-    h1{
-        font-weight: bold;
-    }
-
-    .message-container {
-        background-color: #ffffff;
-        border-radius: 1.5rem;
-        box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
         padding: 2rem;
-        margin-bottom: 2rem;
-        border-left: 0.5rem solid #1e88e5;
-        transition: all 0.3s ease-in-out;
+
+        h1 {
+            font-weight: bold;
+            font-size: 2rem;
+        }
+
+        .message-container {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 0.5rem solid #1e88e5;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .message-header {
+            font-size: 2rem;
+            color: #1e88e5;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .table th,
+        .table td {
+            padding: 1rem;
+            font-size: 1rem;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #1e88e5;
+            color: #fff;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .table td {
+            font-size: 1rem;
+        }
+
+        .message-button {
+            background-color: #1e88e5;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease-in-out;
+        }
     }
 
-    .message-header {
-        font-size: 2rem;
-        color: #1e88e5;
-        font-weight: bold;
-        margin-bottom: 1.5rem;
-    }
-
-    .table th,
-    .table td {
-        padding: 1rem;
-        text-align: left;
-        vertical-align: top;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .table th {
-        background-color: #1e88e5;
-        color: #fff;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-    }
-
-    .table td {
-        font-size: 1rem;
-    }
-
-    .message-button {
-        background-color: #1e88e5;
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 2rem;
-        text-decoration: none;
-        font-size: 1rem;
-        transition: background-color 0.3s ease-in-out;
-    }
+    @media (max-width: 790px) {
+        .date-column {
+            display: none;
+        }
 </style>
