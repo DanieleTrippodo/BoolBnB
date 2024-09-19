@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+
         <div class="row">
             @if ($apartments->isEmpty())
                 <div class="col-12 text-center">
