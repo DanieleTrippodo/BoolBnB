@@ -34,10 +34,11 @@ class Apartment extends Model
     }
 
 
-    public function Sponsor()
-    {
-        return $this->belongsToMany(Sponsor::class);
-    }
+    public function sponsors()
+{
+    return $this->belongsToMany(Sponsor::class, 'apartment_sponsor')
+                ->withPivot('start_date', 'end_date');
+}
 
 
     public function extraServices()
@@ -45,5 +46,9 @@ class Apartment extends Model
         return $this->belongsToMany(ExtraService::class, 'apartment_service');
     }
 
+    public function messages()
+{
+    return $this->hasMany(Message::class);
+}
 
 }

@@ -13,13 +13,12 @@ class ApartmentSponsorSeeder extends Seeder
      */
     public function run(): void
     {
-        $startDate = Carbon::now();
-
-        // Ottieni tutti i piani di sponsorizzazione e gli appartamenti
+        // Ottieni tutti i piani di sponsorizzazione e 7 appartamenti casuali
         $sponsorIds = DB::table('sponsors')->pluck('id')->toArray();
-        $apartmentIds = DB::table('apartments')->pluck('id')->toArray();
+        $apartmentIds = DB::table('apartments')->inRandomOrder()->limit(7)->pluck('id')->toArray();
 
         $sponsorings = [];
+        $startDate = Carbon::now();
 
         foreach ($apartmentIds as $apartmentId) {
             // Seleziona un piano di sponsorizzazione casuale
