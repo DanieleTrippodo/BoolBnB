@@ -17,7 +17,7 @@
                                 <th>Mittente</th>
                                 <th>Email del Mittente</th>
                                 <th>Messaggio</th>
-                                <th>Data</th>
+                                <th class="date-column">Data</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,57 +46,74 @@
 
     .container {
         padding: 2rem;
+    }
 
-        h1 {
-            font-weight: bold;
-            font-size: 2rem;
+    h1 {
+        font-weight: bold;
+        font-size: 2rem;
+    }
+
+    .message-container {
+        background-color: #ffffff;
+        border-radius: 1.5rem;
+        box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border-left: 0.5rem solid #1e88e5;
+        transition: all 0.3s ease-in-out;
+        overflow-x: auto;
+    }
+
+    .message-header {
+        font-size: 2rem;
+        color: #1e88e5;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    .table th,
+    .table td {
+        padding: 1rem;
+        font-size: 1rem;
+        text-align: left;
+        vertical-align: top;
+        border-bottom: 1px solid #ddd;
+        word-wrap: break-word;
+    }
+
+    .table th {
+        background-color: #1e88e5 !important;
+        color: #fff !important;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+    }
+
+    .table td {
+        font-size: 1rem;
+    }
+
+    .message-button {
+        background-color: #1e88e5;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 2rem;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+        .table td {
+            word-wrap: break-word;
+            white-space: normal;
         }
 
         .message-container {
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-left: 0.5rem solid #1e88e5;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .message-header {
-            font-size: 2rem;
-            color: #1e88e5;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-        }
-
-        .table th,
-        .table td {
             padding: 1rem;
-            font-size: 1rem;
-            text-align: left;
-            vertical-align: top;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .table th {
-            background-color: #1e88e5;
-            color: #fff;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-        }
-
-        .table td {
-            font-size: 1rem;
-        }
-
-        .message-button {
-            background-color: #1e88e5;
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 2rem;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: background-color 0.3s ease-in-out;
         }
     }
 
@@ -104,4 +121,5 @@
         .date-column {
             display: none;
         }
+    }
 </style>
