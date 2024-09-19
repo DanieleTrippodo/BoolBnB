@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\ExtraService;
+use App\Models\Sponsor;
 use Illuminate\Http\Request;
 
 class GuestController extends Controller
