@@ -124,7 +124,7 @@
         color: white;
     }
 
-    h2{
+    h2 {
         padding: .5rem;
     }
 
