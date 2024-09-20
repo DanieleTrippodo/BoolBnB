@@ -12,23 +12,27 @@
             @else
                 @foreach ($apartments as $apartment)
                     <div class="col-lg-4 col-md-6 col-12">
-                        <div class="card mb-3 apartment-card">
-                            <div id="conteiner-img">
+                        <div id="cards" class="card mb-3 apartment-card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $apartment->title }}</h5>
+                            </div>
+                            <div id="conteiner-img" class="position-relative">
+                                {{-- Contenitore per immagine e testo --}}
                                 @if ($apartment->images)
                                     <img id="img-house" src="{{ asset('storage/' . $apartment->images) }}"
                                         alt="Apartment Image" class="img-thumbnail">
                                 @endif
-                            </div>
 
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $apartment->title }}</h5>
+                                {{-- Scritta sponsorizzato all'interno dell'immagine --}}
+                                @if ($apartment->sponsors && $apartment->sponsors->count() > 0)
+                                    <p class="sponsor-label">SPONSORED</p>
+                                @endif
                             </div>
-
                             <div class="card-footer">
                                 <div class="btn-group" role="group"> {{-- Azioni per appartamento --}}
-                                    <a href="{{ route('user.apartments.show', $apartment->id) }}"
+                                    <a id="btn-one" href="{{ route('user.apartments.show', $apartment->id) }}"
                                         class="btn btn-cr btn-primary me-1">Visualizza</a>
-                                    <a href="{{ route('user.apartments.edit', $apartment->id) }}"
+                                    <a id="btn-two" href="{{ route('user.apartments.edit', $apartment->id) }}"
                                         class="btn btn-cr btn-primary me-1">Modifica</a>
 
                                     <form action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST"
@@ -36,7 +40,7 @@
                                         data-apartment-name="{{ $apartment->title }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-cr btn-danger"
+                                        <button id="btn-three" type="submit" class="btn btn-cr btn-danger"
                                             id="btn-danger">Elimina</button>
                                     </form>
 
@@ -72,24 +76,53 @@
         overflow: hidden;
     }
 
+    #cards {
+        border-radius: 20px;
+    }
+
     #img-house {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 20px;
     }
+
+    .sponsor-label {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(255, 215, 0, 0.8);
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .card-body {
+        text-align: center;
+
+        h5 {
+            color: #0a3d62;
+            font-weight: bolder;
+            font-size: 1.4rem;
+        }
+    }
+
     .card-footer {
         display: flex;
     }
 
     #conteiner-img {
+        position: relative;
         height: 15rem;
-        border-radius:
+        border-radius: 20px;
     }
 
     .btn-cr {
         padding: 0.5rem 1rem;
         text-align: center;
-        border-radius: 0.5rem;
+        border-radius: 15px;
         min-width: 120px;
     }
 
@@ -100,7 +133,35 @@
         justify-content: center;
     }
 
-    .btn-group .btn {
-        flex-grow: 1;
+    #btn-two {
+        background-color: goldenrod;
+    }
+
+    #btn-one,
+    #btn-two,
+    #btn-three {
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        background-color: #0a3d62;
+        color: white;
+        border: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #btn-one:hover,
+    #btn-two:hover,
+    #btn-three:hover {
+        background-color: #ff5733;
+        transform: translateY(-3px);
+    }
+
+    #btn-one:active,
+    #btn-two:active,
+    #btn-three:active {
+        background-color: #c13e27;
+        transform: translateY(0);
     }
 </style>
