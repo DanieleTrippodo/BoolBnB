@@ -16,11 +16,17 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        // Recupera tutti gli appartamenti dell'utente loggato
-        $apartments = Apartment::where('user_id', auth()->id())->get();
+        // Recupera gli appartamenti ordinando prima quelli sponsorizzati
+        $apartments = Apartment::where('user_id', auth()->id())
+            ->with('sponsors')
+            ->get()
+            ->sortByDesc(function($apartment) {
+                return $apartment->sponsors->count();
+            });
 
         return view('user.apartment.index', compact('apartments'));
     }
+
 
     /**
      * Show the form for creating a new resource.
