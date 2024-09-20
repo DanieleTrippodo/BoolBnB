@@ -34,14 +34,14 @@
                                         class="btn btn-cr btn-primary me-1">Visualizza</a>
                                     <a id="btn-two" href="{{ route('user.apartments.edit', $apartment->id) }}"
                                         class="btn btn-cr btn-primary me-1">Modifica</a>
-
-                                    <form action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST"
+                                    <form id="delete-form-{{ $apartment->id }}"
+                                        action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST"
                                         style="display:inline;" class="apartment-form-delete"
                                         data-apartment-name="{{ $apartment->title }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button id="btn-three" type="submit" class="btn btn-cr btn-danger"
-                                            id="btn-danger">Elimina</button>
+                                        <button id="btn-three" type="button" class="btn btn-cr btn-danger"
+                                            onclick="confermaEliminazione('{{ $apartment->id }}', '{{ $apartment->title }}')">Elimina</button>
                                     </form>
 
                                 </div>
@@ -58,6 +58,26 @@
 @section('custom-scripts')
     @vite('resources/js/delete-confirm.js')
 @endsection
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confermaEliminazione(id, title) {
+        Swal.fire({
+            title: 'Sei sicuro?',
+            text: "Stai per eliminare l'appartamento: " + title,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#002b4d',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sì, elimina!',
+            cancelButtonText: 'Annulla'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        })
+    }
+</script>
 
 <style>
     body {
@@ -133,10 +153,6 @@
         justify-content: center;
     }
 
-    #btn-two {
-        background-color: goldenrod;
-    }
-
     #btn-one,
     #btn-two,
     #btn-three {
@@ -151,10 +167,17 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    #btn-one:hover,
-    #btn-two:hover,
+    #btn-three {
+        background-color: red;
+    }
+
     #btn-three:hover {
-        background-color: #ff5733;
+        transform: translateY(-3px);
+    }
+
+    #btn-one:hover,
+    #btn-two:hover {
+        background-color: #ac93a7;
         transform: translateY(-3px);
     }
 
