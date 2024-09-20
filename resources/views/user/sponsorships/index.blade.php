@@ -22,18 +22,19 @@
         <div class="card text-center me-3" style="width: 18rem;">
             <div class="card-body">
                 <h5 class="card-title"> {{ $sponsor->name }} </h5>
-                <p class="card-text"> Durata: {{ $sponsor->duration }} H</p>
-                <p class="card-text"> Costo: {{ $sponsor->cost }} &euro;</p>
-
-                <!-- Form per acquistare la sponsorizzazione -->
-                <form action="{{ route('user.sponsorships.assign', $apartment->id) }}" method="POST">
-                    @csrf
-                    <!-- Passa l'id dello sponsor -->
-                    <input type="hidden" name="sponsor_id" value="{{ $sponsor->id }}">
-                    <button type="submit" class="btn btn-success">Acquista</button>
-                </form>
+                <p class="card-text"> {{ $sponsor->duration }} H</p>
+                <p class="card-text"> {{ $sponsor->cost }} &euro;</p>
+                <a href="{{ route('token') }}" class="btn btn-success">Acquista</a>
             </div>
         </div>
     @endforeach
 </div>
 @endsection
+
+
+{{-- <form action="{{ route('user.sponsorships.assign', $apartment->id) }}" method="POST">
+    @csrf
+    <!-- Passa l'id dello sponsor -->
+    <input type="hidden" name="sponsor_id" value="{{ $sponsor->id }}">
+    <button type="submit" class="btn btn-success">Acquista</button>
+</form> --}}
