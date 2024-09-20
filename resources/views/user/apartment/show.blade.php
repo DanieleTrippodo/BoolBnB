@@ -6,6 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card mb-3" style="width: 100%;">
+                    <h3 class="card-title-1">{{ $apartment->title }}</h3>
                     <!-- Mostra l'immagine se esiste, altrimenti un'immagine di placeholder -->
                     @if ($apartment->images)
                         <img src="{{ asset('storage/' . $apartment->images) }}" alt="" class="img-fluid">
@@ -14,7 +15,6 @@
                     @endif
 
                     <div class="card-body">
-                        <h3 class="card-title-1">{{ $apartment->title }}</h3>
                         <p class="card-text">
                             <strong>Indirizzo:</strong> {{ $apartment->address }}<br>
                             <strong>Stanze:</strong> {{ $apartment->rooms_num }}<br>
