@@ -8,7 +8,7 @@
                 <h5 class="card-title"> {{ $sponsor->name }} </h5>
                 <p class="card-text"> {{ $sponsor->duration }} H</p>
                 <p class="card-text"> {{ $sponsor->cost }} &euro;</p>
-                <a href="#" class="btn btn-success">Acquista</a>
+                <a href="{{ route('token') }}" class="btn btn-success">Acquista</a>
             </div>
         </div>
     @endforeach

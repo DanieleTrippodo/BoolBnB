@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BraintreeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ApartmentController as UserApartmentController;
 use App\Http\Controllers\User\MessageController as UserMessageController;
@@ -73,4 +74,9 @@ Route::middleware('auth')->name('user.')->prefix('user/')->group(function () {
 
 // Sponsorships
     Route::get('/sponsors', [UserSponsorController::class, 'sponsorshipsIndex'])->name('sponsorships.index');
+
+
+
 });
+
+Route::any('/payment', [BraintreeController::class, 'token'])->name('token')->middleware('auth');
