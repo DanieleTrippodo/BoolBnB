@@ -63,7 +63,7 @@
                             appartamenti</a>
                         <a href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-primary">Modifica
                             appartamento</a>
-                        <a href="{{ route('user.sponsorships.index', $apartment->id) }}"
+                        <a id="sponsorizza" href="{{ route('user.sponsorships.index', $apartment->id) }}"
                             class="btn btn-primary">Sponsorizza</a>
 
                     </div>
@@ -115,10 +115,18 @@
         padding: .5rem !important;
     }
 
+    .badge{
+        margin-left: .5rem;
+    }
+
+    li{
+        margin: .5rem;
+    }
+
     .card-title-1 {
         font-size: 2rem;
         font-weight: bolder !important;
-        color: #1e88e5;
+        color: #002b4d;
         text-align: center;
         text-transform: uppercase;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -129,5 +137,10 @@
         border: 4px solid #ccc;
         border-radius: 20px;
         color: black
+    }
+
+    #sponsorizza{
+        background-color: gold;
+        color: black;
     }
 </style>
