@@ -13,7 +13,7 @@
 @endif
 
 <div>
-    <h2 class="text-center title">Sponsorizzazione</h2>
+    <h2 class="text-center title">Acquista una sponsorizzazione</h2>
 </div>
 
 <div class="container d-flex justify-content-center align-items-center">
