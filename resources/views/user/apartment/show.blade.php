@@ -21,6 +21,9 @@
                             <strong>Letti:</strong> {{ $apartment->beds_num }}<br>
                             <strong>Bagni:</strong> {{ $apartment->bathroom_num }}<br>
                             <strong>Metri quadrati:</strong> {{ $apartment->sq_mt }} m²<br>
+                            @if ($apartment->sponsors && $apartment->sponsors->count() > 0)
+                            <p class="sponsor-label">SPONSORED</p>
+                        @endif
 
                         </p>
                     </div>
@@ -59,10 +62,19 @@
                     <hr>
 
                     <div class="card-body-3">
-                        <a href="{{ route('user.apartments.index') }}" class="btn btn-secondary">Torna agli
+                        <a id="btn-one" href="{{ route('user.apartments.index') }}" class="btn btn-secondary">Torna agli
                             appartamenti</a>
-                        <a href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-primary">Modifica
+                        <a id="btn-two" href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-primary">Modifica
                             appartamento</a>
+                        <form id="delete-form-{{ $apartment->id }}"
+                                action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST"
+                                style="display:inline;" class="apartment-form-delete"
+                                data-apartment-name="{{ $apartment->title }}">
+                                @csrf
+                                @method('DELETE')
+                                <button id="btn-three" type="button" class="btn btn-danger"
+                                    onclick="confermaEliminazione('{{ $apartment->id }}', '{{ $apartment->title }}')">Elimina</button>
+                            </form>
                         <a id="sponsorizza" href="{{ route('user.sponsorships.index', $apartment->id) }}"
                             class="btn btn-primary">Sponsorizza</a>
 
@@ -73,6 +85,30 @@
     </div>
 
 @endsection
+
+@section('custom-scripts')
+    @vite('resources/js/delete-confirm.js')
+@endsection
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confermaEliminazione(id, title) {
+        Swal.fire({
+            title: 'Sei sicuro?',
+            text: "Stai per eliminare l'appartamento: " + title,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#002b4d',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sì, elimina!',
+            cancelButtonText: 'Annulla'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        })
+    }
+</script>
 
 <style>
     body {
@@ -143,4 +179,83 @@
         background-color: gold;
         color: black;
     }
+
+    .sponsor-label {
+        color: black;
+        background-color: rgba(255, 215, 0, 0.8);
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-weight: bold;
+    }
+
+
+    #btn-one,
+    #btn-two,
+    #btn-three {
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        background-color: #0a3d62;
+        color: white;
+        border: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-cr {
+        padding: 0.5rem 1rem;
+        text-align: center;
+        border-radius: 15px;
+        min-width: 120px;
+    }
+
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    #btn-one,
+    #btn-two,
+    #btn-three,
+    #sponsorizza {
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        background-color: #0a3d62;
+        color: white;
+        border: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #sponsorizza {
+        background-color: gold;
+        color: black;
+    }
+
+    #btn-three {
+        background-color: red;
+    }
+
+    #btn-three:hover {
+        transform: translateY(-3px);
+    }
+
+    #btn-one:hover,
+    #btn-two:hover {
+        background-color: #ac93a7;
+        transform: translateY(-3px);
+    }
+
+    #btn-one:active,
+    #btn-two:active,
+    #btn-three:active {
+        background-color: #c13e27;
+        transform: translateY(0);
+    }
+
 </style>
