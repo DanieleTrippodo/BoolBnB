@@ -8,7 +8,9 @@
     <!-- Token CSRF -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('page-title')</title>
+    <title>{{ config('app.name', 'BoolBnB') }}</title>
+
+    <link rel="icon" href="{{ asset('Small_Logo.png') }}" type="image/x-icon">
 
     <!-- Font -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
