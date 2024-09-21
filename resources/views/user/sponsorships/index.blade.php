@@ -24,10 +24,10 @@
                 <p class="card-text"><span>Durata:</span> {{ $sponsor->duration }} H</p>
                 <p class="card-text"><span>Costo:</span> {{ $sponsor->cost }} &euro;</p>
 
-                <!-- Bottone per aprire la modale -->
-                {{-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#paymentModal" data-sponsor-id="{{ $sponsor->id }}">
+               <!-- Bottone per aprire la modale -->
+              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#paymentModal" data-sponsor-id="{{ $sponsor->id }}">
                     Acquista
-                </button> --}}
+                </button>
 
 
 
@@ -38,7 +38,7 @@
 </div>
 
 <!-- Modal per il pagamento -->
-{{-- <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+ <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
