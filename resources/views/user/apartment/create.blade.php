@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container mt-4">
+    <div class="container mt-4 p-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-header-wrapper">
@@ -108,10 +108,12 @@
         background: linear-gradient(135deg, #f8f9fa, #ffc0cb, #0a3d62);
         font-family: 'Roboto', sans-serif;
         color: #333;
+
     }
 
     .container {
         margin-top: 2rem;
+
     }
 
     form {
