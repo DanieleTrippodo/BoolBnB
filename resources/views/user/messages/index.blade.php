@@ -2,7 +2,11 @@
 
 @section('content')
     <div class="container mt-4">
-        <h1>Messaggi ricevuti:</h1>
+        <div class="col-md-8 mx-auto">
+            <div class="form-header-wrapper">
+                <h2 class="text-center form-header">Messaggi ricevuti</h2>
+            </div>
+        </div>
 
         @if ($messages->isEmpty())
             <p>Non hai ricevuto messaggi.</p>
@@ -120,6 +124,34 @@
     @media (max-width: 790px) {
         .date-column {
             display: none;
+        }
+    }
+
+    .form-header-wrapper {
+        background: linear-gradient(135deg, #1e88e5, #0a3d62);
+        border-radius: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+    }
+
+    .form-header {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 768px) {
+        .form-header {
+            font-size: 1.5rem;
+        }
+
+        .form-header-wrapper {
+            padding: 0.5rem;
         }
     }
 </style>

@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container">
+        <div class="col-md-8 mx-auto">
+            <div class="form-header-wrapper">
+                <h2 class="text-center form-header">I tuoi appartamenti</h2>
+            </div>
+        </div>
+
 
         <div class="row">
             @if ($apartments->isEmpty())
@@ -25,7 +31,7 @@
 
                                 {{-- Scritta sponsorizzato all'interno dell'immagine --}}
                                 @if ($apartment->sponsors && $apartment->sponsors->count() > 0)
-                                    <p class="sponsor-label">SPONSORED</p>
+                                    <p class="sponsor-label">SPONSORIZZATO</p>
                                 @endif
                             </div>
                             <div class="card-footer">
@@ -187,4 +193,33 @@
         background-color: #c13e27;
         transform: translateY(0);
     }
+
+    .form-header-wrapper {
+    background: linear-gradient(135deg, #1e88e5, #0a3d62);
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .form-header {
+        font-size: 1.5rem;
+    }
+
+    .form-header-wrapper {
+        padding: 0.5rem;
+    }
+}
+
 </style>
