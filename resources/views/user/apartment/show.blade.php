@@ -22,8 +22,8 @@
                             <strong>Bagni:</strong> {{ $apartment->bathroom_num }}<br>
                             <strong>Metri quadrati:</strong> {{ $apartment->sq_mt }} m²<br>
                             @if ($apartment->sponsors && $apartment->sponsors->count() > 0)
-                            <p class="sponsor-label">SPONSORED</p>
-                        @endif
+                                <p class="sponsor-label">SPONSORED</p>
+                            @endif
 
                         </p>
                     </div>
@@ -62,11 +62,14 @@
                     <hr>
 
                     <div class="card-body-3">
-                        <a id="btn-one" href="{{ route('user.apartments.index') }}" class="btn btn-secondary">Torna agli
-                            appartamenti</a>
-                        <a id="btn-two" href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-primary">Modifica
-                            appartamento</a>
-                        <form id="delete-form-{{ $apartment->id }}"
+                        <div id="button-group">
+                            <a id="btn-one" href="{{ route('user.apartments.index') }}" class="btn btn-secondary">Torna
+                                agli
+                                appartamenti</a>
+                            <a id="btn-two" href="{{ route('user.apartments.edit', $apartment->id) }}"
+                                class="btn btn-primary">Modifica
+                                appartamento</a>
+                            <form id="delete-form-{{ $apartment->id }}"
                                 action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST"
                                 style="display:inline;" class="apartment-form-delete"
                                 data-apartment-name="{{ $apartment->title }}">
@@ -75,13 +78,14 @@
                                 <button id="btn-three" type="button" class="btn btn-danger"
                                     onclick="confermaEliminazione('{{ $apartment->id }}', '{{ $apartment->title }}')">Elimina</button>
                             </form>
-                        <a id="sponsorizza" href="{{ route('user.sponsorships.index', $apartment->id) }}"
-                            class="btn btn-primary">Sponsorizza</a>
-
+                            <a id="sponsorizza" href="{{ route('user.sponsorships.index', $apartment->id) }}"
+                                class="btn btn-primary">Sponsorizza</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 @endsection
@@ -151,11 +155,11 @@
         padding: .5rem !important;
     }
 
-    .badge{
+    .badge {
         margin-left: .5rem;
     }
 
-    li{
+    li {
         margin: .5rem;
     }
 
@@ -175,7 +179,7 @@
         color: black
     }
 
-    #sponsorizza{
+    #sponsorizza {
         background-color: gold;
         color: black;
     }
@@ -188,29 +192,7 @@
         font-weight: bold;
     }
 
-
-    #btn-one,
-    #btn-two,
-    #btn-three {
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        background-color: #0a3d62;
-        color: white;
-        border: none;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-cr {
-        padding: 0.5rem 1rem;
-        text-align: center;
-        border-radius: 15px;
-        min-width: 120px;
-    }
-
-    .btn-group {
+    #button-group {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
@@ -221,15 +203,31 @@
     #btn-two,
     #btn-three,
     #sponsorizza {
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        background-color: #0a3d62;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 120px;
+        width: 100%;
+        max-width: 200px;
+        height: 50px;
         color: white;
-        border: none;
         font-weight: bold;
         text-transform: uppercase;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        border: none;
         transition: background-color 0.3s ease, transform 0.3s ease;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin: .3rem;
+    }
+
+    #btn-one,
+    #btn-two {
+        background-color: #002b4d;
+    }
+
+    #btn-three {
+        background-color: red;
     }
 
     #sponsorizza {
@@ -237,25 +235,30 @@
         color: black;
     }
 
-    #btn-three {
-        background-color: red;
-    }
-
-    #btn-three:hover {
-        transform: translateY(-3px);
-    }
-
     #btn-one:hover,
-    #btn-two:hover {
-        background-color: #ac93a7;
+    #btn-two:hover,
+    #btn-three:hover,
+    #sponsorizza:hover {
         transform: translateY(-3px);
     }
 
     #btn-one:active,
     #btn-two:active,
-    #btn-three:active {
-        background-color: #c13e27;
+    #btn-three:active,
+    #sponsorizza:active {
         transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+
+        #btn-one,
+        #btn-two,
+        #btn-three,
+        #sponsorizza {
+            width: 100%;
+            max-width: none;
+            min-width: none;
+        }
     }
 
 </style>
