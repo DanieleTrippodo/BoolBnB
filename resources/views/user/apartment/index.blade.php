@@ -25,7 +25,7 @@
 
                                 {{-- Scritta sponsorizzato all'interno dell'immagine --}}
                                 @if ($apartment->sponsors && $apartment->sponsors->count() > 0)
-                                    <p class="sponsor-label">SPONSORED</p>
+                                    <p class="sponsor-label">SPONSORIZZATO</p>
                                 @endif
                             </div>
                             <div class="card-footer">

@@ -260,5 +260,4 @@
             min-width: none;
         }
     }
-
 </style>
