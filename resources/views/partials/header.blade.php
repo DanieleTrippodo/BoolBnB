@@ -33,7 +33,7 @@
 
 
                 <li class="nav-item">
-                    <a href="http://localhost:5175/" class="btn btn-primary">Sito Guest</a> <!-- Link al sito guest DA CAMBIARE IN BASE ALL'INDIRIZZO LOCALE di npm run dev di Vite del Progetto Vue -->
+                    <a href="http://localhost:5173/" class="btn btn-primary">Sito Guest</a> <!-- Link al sito guest DA CAMBIARE IN BASE ALL'INDIRIZZO LOCALE di npm run dev di Vite del Progetto Vue -->
                 </li>
                 <!-- Link di autenticazione -->
                 @guest
