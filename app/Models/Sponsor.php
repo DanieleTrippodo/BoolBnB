@@ -17,9 +17,10 @@ class Sponsor extends Model
     ];
 
 
-    // Relazione con Sponsor e Apartments
-    public function apartment(){
-        return $this->belongsTo(Apartment::class);
-    }
-
+// Relazione con Apartments
+public function apartments(){
+    return $this->belongsToMany(Apartment::class)
+                ->withPivot('start_date', 'end_date')
+                ->withTimestamps();
+}
 }

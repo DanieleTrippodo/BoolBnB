@@ -24,13 +24,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Lista appartamenti
+Route::get('/apartments', [GuestController::class, 'index']);
 
+// Dettagli appartamento
+Route::get('/apartments/{id}', [GuestController::class, 'show']);
 
-
-Route::get('/apartments', [GuestController::class, 'index']);  // Lista appartamenti
-Route::get('/apartments/{id}', [GuestController::class, 'show']);  // Dettagli appartamento
+// Ricerca avanzata degli appartamenti
 Route::get('/search', [GuestController::class, 'search'])->name('guest.search');
 
+// Ottenere tutti i servizi extra
 Route::get('/extra-services', [GuestController::class, 'getAllExtraServices']);
 
-Route::post('/messages', [MessageController::class, 'store']);  // Invia messaggio
+// Assegnare uno sponsor a un appartamento
+Route::post('/apartments/{id}/assign-sponsor', [GuestController::class, 'assignSponsor']);
+
+// Invia messaggio
+Route::post('/messages', [MessageController::class, 'store']);

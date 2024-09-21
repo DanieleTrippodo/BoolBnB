@@ -73,10 +73,10 @@ Route::middleware('auth')->name('user.')->prefix('user/')->group(function () {
     Route::get('/messages', [UserMessageController::class, 'showMessagesForOwner'])->name('messages.index');
 
 // Sponsorships
-    Route::get('/sponsors', [UserSponsorController::class, 'sponsorshipsIndex'])->name('sponsorships.index');
+
+Route::get('/sponsors/{apartment}', [UserSponsorController::class, 'sponsorshipsIndex'])->name('sponsorships.index');
+Route::post('/sponsors/{apartment}/assign', [UserSponsorController::class, 'assignSponsor'])->name('sponsorships.assign');
 
 
 
 });
-
-Route::any('/payment', [BraintreeController::class, 'token'])->name('token')->middleware('auth');
