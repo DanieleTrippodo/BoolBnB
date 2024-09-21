@@ -257,7 +257,14 @@
         #sponsorizza {
             width: 100%;
             max-width: none;
-            min-width: none;
         }
+
+        #btn-three{
+            min-width: 440.4px !important;
+            margin: 0 auto;
+        }
+
     }
+
+
 </style>
