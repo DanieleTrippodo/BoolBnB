@@ -6,7 +6,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card mb-3" style="width: 100%;">
-                    <h3 class="card-title-1">{{ $apartment->title }}</h3>
+                    <div class="col-md-8 mx-auto">
+                        <div class="form-header-wrapper">
+                            <h2 class="text-center form-header">{{ $apartment->title }}</h2>
+                        </div>
+                    </div>
                     <!-- Mostra l'immagine se esiste, altrimenti un'immagine di placeholder -->
                     @if ($apartment->images)
                         <img src="{{ asset('storage/' . $apartment->images) }}" alt="" class="img-fluid">
@@ -259,12 +263,37 @@
             max-width: none;
         }
 
-        #btn-three{
+        #btn-three {
             min-width: 440.4px !important;
             margin: 0 auto;
         }
-
     }
 
+    .form-header-wrapper {
+        background: linear-gradient(135deg, #1e88e5, #0a3d62);
+        border-radius: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+    }
 
+    .form-header {
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 768px) {
+        .form-header {
+            font-size: 1.5rem;
+        }
+
+        .form-header-wrapper {
+            padding: 0.5rem;
+        }
+    }
 </style>

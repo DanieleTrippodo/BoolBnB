@@ -4,6 +4,12 @@
 
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-md-8 mx-auto">
+                <div class="form-header-wrapper">
+                    <h2 class="text-center form-header p-2">Modifica appartamento</h2>
+                </div>
+            </div>
+
 
             @if ($errors->any())
                 <div class="col-8">
@@ -211,7 +217,7 @@
         max-width: 200px;
     }
 
-    #big-card{
-        padding:2rem;
+    #big-card {
+        padding: 2rem;
     }
 </style>
