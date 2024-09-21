@@ -12,13 +12,17 @@
 <meta http-equiv="refresh" content="2;url={{ route('user.apartments.index') }}" />
 @endif
 
+<div>
+    <h2 class="text-center title">Sponsorizzazione</h2>
+</div>
+
 <div class="container d-flex justify-content-center align-items-center">
     @foreach ($sponsors as $sponsor)
         <div class="card text-center me-3" style="width: 18rem;">
-            <div class="card-body">
+            <div class="card-body" id="card">
                 <h5 class="card-title">{{ $sponsor->name }}</h5>
-                <p class="card-text">Durata: {{ $sponsor->duration }} H</p>
-                <p class="card-text">Costo: {{ $sponsor->cost }} &euro;</p>
+                <p class="card-text"><span>Durata:</span> {{ $sponsor->duration }} H</p>
+                <p class="card-text"><span>Costo:</span> {{ $sponsor->cost }} &euro;</p>
 
                 <!-- Bottone per aprire la modale -->
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#paymentModal" data-sponsor-id="{{ $sponsor->id }}">
@@ -145,3 +149,37 @@
 </script>
 
 @endsection
+
+<style>
+body {
+    background: linear-gradient(135deg, #f8f9fa, #ffc0cb, #0a3d62);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    height: 100%;
+        h5,
+        span{
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    h5{
+        text-transform: uppercase;
+    }
+    .title{
+        font-size: 2rem;
+        font-weight: bold;
+        color: #1e88e5;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(135deg, #1e88e5, #0a3d62);
+        border-radius: 15px;
+        color: white;
+        width: 50%;
+        margin: 0 auto;
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+        padding: .5rem;
+    }
+}
+
+</style>
