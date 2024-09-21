@@ -38,7 +38,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="paymentModalLabel">Simulazione Pagamento</h5>
+                <h5 class="modal-title text-center" id="paymentModalLabel">Pagamento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -180,6 +180,18 @@ body {
         margin-top: 2rem;
         padding: .5rem;
     }
+
+    #payment-form {
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    border-left: 0.5rem solid #1e88e5;
+    h5{
+        text-align: center;
+    }
+
 }
 
 </style>
