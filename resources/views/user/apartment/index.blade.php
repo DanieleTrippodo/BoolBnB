@@ -8,7 +8,6 @@
             </div>
         </div>
 
-
         <div class="row">
             @if ($apartments->isEmpty())
                 <div class="col-12 text-center">
@@ -23,19 +22,17 @@
                                 <h5 class="card-title">{{ $apartment->title }}</h5>
                             </div>
                             <div id="conteiner-img" class="position-relative">
-                                {{-- Contenitore per immagine e testo --}}
                                 @if ($apartment->images)
                                     <img id="img-house" src="{{ asset('storage/' . $apartment->images) }}"
                                         alt="Apartment Image" class="img-thumbnail">
                                 @endif
 
-                                {{-- Scritta sponsorizzato all'interno dell'immagine --}}
                                 @if ($apartment->sponsors && $apartment->sponsors->count() > 0)
                                     <p class="sponsor-label">SPONSORIZZATO</p>
                                 @endif
                             </div>
                             <div class="card-footer">
-                                <div class="btn-group" role="group"> {{-- Azioni per appartamento --}}
+                                <div class="btn-group" role="group">
                                     <a id="btn-one" href="{{ route('user.apartments.show', $apartment->id) }}"
                                         class="btn btn-cr btn-primary me-1">Visualizza</a>
                                     <a id="btn-two" href="{{ route('user.apartments.edit', $apartment->id) }}"
@@ -49,7 +46,6 @@
                                         <button id="btn-three" type="button" class="btn btn-cr btn-danger"
                                             onclick="confermaEliminazione('{{ $apartment->id }}', '{{ $apartment->title }}')">Elimina</button>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -83,6 +79,10 @@
             }
         })
     }
+    document.addEventListener('DOMContentLoaded', function() {
+        const apartments = @json($apartments);
+        document.body.classList.toggle('empty-apartments', apartments.length === 0);
+    });
 </script>
 
 <style>
@@ -90,6 +90,10 @@
         background: linear-gradient(135deg, #f8f9fa, #ffc0cb, #0a3d62);
         font-family: 'Roboto', sans-serif;
         color: #333;
+        height: auto;
+    }
+
+    .empty-apartments {
         height: 100%;
     }
 
@@ -195,31 +199,30 @@
     }
 
     .form-header-wrapper {
-    background: linear-gradient(135deg, #1e88e5, #0a3d62);
-    border-radius: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: .5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
-}
+        background: linear-gradient(135deg, #1e88e5, #0a3d62);
+        border-radius: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+    }
 
-.form-header {
-    font-size: 2rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-@media (max-width: 768px) {
     .form-header {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    .form-header-wrapper {
-        padding: 0.5rem;
-    }
-}
+    @media (max-width: 768px) {
+        .form-header {
+            font-size: 1.5rem;
+        }
 
+        .form-header-wrapper {
+            padding: 0.5rem;
+        }
+    }
 </style>
