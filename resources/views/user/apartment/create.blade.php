@@ -21,7 +21,8 @@
             @endif
 
             <div class="col-md-8">
-                <form action="{{ route('user.apartments.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="apartment-form" action="{{ route('user.apartments.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -70,6 +71,8 @@
 
                     <div class="mb-3">
                         <label for="extra_services" class="form-label">Servizi Extra</label>
+                        <div id="error-message" class="alert alert-danger" style="display: none;">
+                        </div>
                         <div class="form-check">
                             @foreach ($services as $service)
                                 <div class="form-check">
@@ -103,17 +106,35 @@
 
 @endsection
 
+@section('custom-scripts')
+    @vite('resources/js/delete-confirm.js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('apartment-form');
+            const errorMessage = document.getElementById('error-message');
+            form.addEventListener('submit', function(event) {
+                const checkedServices = document.querySelectorAll('input[name="extra_services[]"]:checked');
+                if (checkedServices.length < 2) {
+                    event.preventDefault();
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent =
+                        'Devi selezionare almeno 2 servizi extra per creare l\'appartamento.';
+                } else {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+    </script>
+@endsection
 <style>
     body {
         background: linear-gradient(135deg, #f8f9fa, #ffc0cb, #0a3d62);
         font-family: 'Roboto', sans-serif;
         color: #333;
-
     }
 
     .container {
         margin-top: 2rem;
-
     }
 
     form {
