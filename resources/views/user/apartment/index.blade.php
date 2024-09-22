@@ -90,7 +90,7 @@
         background: linear-gradient(135deg, #f8f9fa, #ffc0cb, #0a3d62);
         font-family: 'Roboto', sans-serif;
         color: #333;
-        height: 100%;
+        height: auto;
     }
 
     .apartment-card {
